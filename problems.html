@@ -65,10 +65,21 @@
     z-index:60;
   }
   .nav-item:hover .dropdown{opacity:1; visibility:visible; transform:translateY(0);}
-  .dropdown a{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-radius:9px; font-size:14px; color:var(--text);}
-  .dropdown a:hover{background:rgba(155,93,229,.14);}
-  .dropdown a .tag{font-size:11px; color:var(--cyan); direction:ltr;}
-  .dropdown .divider{height:1px; background:var(--border); margin:6px 4px;}
+  .dropdown{width:270px;}
+  .cat{position:relative;}
+  .cat-link{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-radius:9px; font-size:14px; color:var(--text);}
+  .cat:hover > .cat-link{background:rgba(155,93,229,.14);}
+  .cat-link .chevron{width:12px; height:12px; color:var(--muted); flex-shrink:0;}
+  .submenu{
+    position:absolute; top:-8px; left:calc(100% + 10px); min-width:250px;
+    background:var(--bg-elev); border:1px solid var(--border); border-radius:14px;
+    padding:8px; box-shadow:0 24px 60px -20px rgba(0,0,0,.7);
+    opacity:0; visibility:hidden; transform:translateX(8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .cat:hover .submenu{opacity:1; visibility:visible; transform:translateX(0);}
+  .submenu a{display:block; padding:10px 14px; border-radius:9px; font-size:13.5px; color:var(--muted);}
+  .submenu a:hover{background:rgba(155,93,229,.1); color:var(--text);}
 
   .nav-cta{background:linear-gradient(135deg,var(--purple),var(--pink)); padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; color:#fff; white-space:nowrap;}
 
@@ -77,7 +88,28 @@
   .page-head h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .page-head p{color:var(--muted); font-size:16px; max-width:620px; margin:0 auto;}
 
-  .hero{padding:90px 0 60px; text-align:center;}
+  .hero{padding:90px 0 60px; text-align:center; position:relative;}
+  .hero-avatar{
+    position:absolute; top:30px; width:120px; text-align:center;
+    opacity:0; transform:translateY(10px);
+    animation:avatarIn .9s ease forwards, avatarFloat 4.5s ease-in-out infinite;
+    animation-delay:1s, 1.9s;
+  }
+  .hero-avatar.left{right:0;}
+  .hero-avatar.right{left:0;}
+  .hero-avatar .avatar-pic{
+    width:110px; height:110px; border-radius:50%; overflow:hidden; margin:0 auto 10px;
+    border:3px solid var(--border); box-shadow:0 12px 34px -10px rgba(155,93,229,.6);
+  }
+  .hero-avatar .avatar-pic img{width:100%; height:100%; object-fit:cover;}
+  .hero-avatar .avatar-caption{
+    font-size:12.5px; color:var(--text); background:var(--bg-elev); border:1px solid var(--border);
+    padding:6px 12px; border-radius:20px; display:inline-flex; align-items:center; gap:5px;
+  }
+  .hero-avatar .avatar-caption svg{width:12px; height:12px; color:var(--cyan); flex-shrink:0;}
+  @keyframes avatarIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes avatarFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);}}
+  @media (max-width:1100px){.hero-avatar{display:none;}}
   .hero h1{font-size:44px; font-weight:900; line-height:1.35; max-width:820px; margin:0 auto 22px;}
   .hero h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
   .hero p{font-size:17px; color:var(--muted); max-width:640px; margin:0 auto 34px;}
@@ -198,7 +230,39 @@
         <a href="index.html">الرئيسية</a>
         <div class="nav-item">
           <span class="nav-trigger">الكورسات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-          <div class="dropdown"><a href="courses.html#database-administration"><span>Database Administration</span><span class="tag">SQL Server, PostgreSQL, MySQL, Oracle, MongoDB</span></a><a href="courses.html#data-analysis"><span>Data Analysis</span><span class="tag">SQL</span></a><a href="courses.html#data-warehousing"><span>Data Warehousing</span><span class="tag">ETL</span></a><div class="divider"></div><a href="servers.html"><span>Servers</span></a><a href="networks.html"><span>Networking</span></a><a href="cloud.html"><span>Cloud</span><span class="tag">AWS · Azure · GCP</span></a><div class="divider"></div><a href="courses.html#virtualization"><span>Virtualization</span><span class="tag">VMware ESXi</span></a><a href="courses.html#backup"><span>Backup & Recovery</span><span class="tag">Veeam</span></a></div>
+          <div class="dropdown">
+        <div class="cat">
+          <a href="courses.html#database-administration" class="cat-link"><span>Database Administration</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#database-administration">SQL Server Database Administrator</a><a href="courses.html#database-administration">PostgreSQL Database Administration</a><a href="courses.html#database-administration">MySQL & Oracle Administration</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#data-analysis" class="cat-link"><span>Data Analysis</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#data-analysis">Data Analysis with SQL</a><a href="courses.html#data-analysis">MongoDB for Analysts</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#data-warehousing" class="cat-link"><span>Data Warehousing</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#data-warehousing">Data Warehousing Fundamentals</a></div>
+        </div>
+        <div class="cat">
+          <a href="servers.html" class="cat-link"><span>Servers</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="servers.html">Backup & Recovery</a><a href="servers.html">Performance Tuning</a><a href="servers.html">High Availability</a></div>
+        </div>
+        <div class="cat">
+          <a href="networks.html" class="cat-link"><span>Networking</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="networks.html">Network Basics</a><a href="networks.html">Firewalls & Security</a><a href="networks.html">VPN & Remote Access</a></div>
+        </div>
+        <div class="cat">
+          <a href="cloud.html" class="cat-link"><span>Cloud</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="cloud.html">AWS</a><a href="cloud.html">Azure</a><a href="cloud.html">Google Cloud</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#virtualization" class="cat-link"><span>Virtualization</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#virtualization">VMware ESXi Administration</a><a href="courses.html#virtualization">vCenter & Clusters</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#backup" class="cat-link"><span>Backup & Recovery</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#backup">Veeam Backup & Replication</a><a href="courses.html#backup">Disaster Recovery Planning</a></div>
+        </div></div>
         </div>
         <a href="articles.html">المقالات</a>
         <a href="problems.html" class="active">مشاكل وحلول</a>
@@ -276,6 +340,7 @@
           <li><a href="courses.html">الكورسات</a></li>
           <li><a href="articles.html">المقالات</a></li>
           <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="helpdesk.html">Technical Support & Help Desk</a></li>
           <li><a href="about.html">عن الموقع</a></li>
         </ul>
       </div>
