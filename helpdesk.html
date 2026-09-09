@@ -4,94 +4,281 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الدعم الفني | Database Admin School</title>
-<meta name="description" content="الدعم الفني في Database Admin School — حلول عملية لمشاكل الدعم الفني وHelp Desk اليومية اللي بتقابل أي فريق IT، من تذاكر الأعطال لحد إدارة ">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
 
+  :root{
+    --bg:#0c0817;
+    --bg-elev:#150f28;
+    --bg-elev-2:#1c1436;
+    --purple:#9b5de5;
+    --pink:#f15bb5;
+    --cyan:#22d3ee;
+    --text:#f3eefb;
+    --muted:#a99fc4;
+    --border:rgba(155,93,229,.22);
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Cairo', sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{font-family:'Tajawal', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  .glow-field{position:fixed; inset:0; z-index:-1; overflow:hidden;}
+  .glow{position:absolute; border-radius:50%; filter:blur(90px); opacity:.35;}
+  .glow-a{width:520px; height:520px; background:var(--purple); top:-160px; right:-120px; animation:drift1 22s ease-in-out infinite;}
+  .glow-b{width:460px; height:460px; background:var(--pink); bottom:-140px; left:-100px; animation:drift2 26s ease-in-out infinite;}
+  .glow-c{width:360px; height:360px; background:var(--cyan); top:40%; left:50%; opacity:.18; animation:drift3 30s ease-in-out infinite;}
+  @keyframes drift1{0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,50px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,-40px)}}
+  @keyframes drift3{0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(-45%,-55%)}}
+
+  header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:8px;}
+  .brand .db-mark{color:var(--cyan); font-family:'Cairo',monospace;}
+  .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
+  .nav-links > a:hover{color:var(--text);}
+  .nav-links > a.active{color:var(--text);}
+
+  .nav-item{position:relative;}
+  .nav-trigger{display:flex; align-items:center; gap:6px; cursor:pointer; padding:8px 0;}
+  .nav-trigger svg{width:13px; height:13px; transition:transform .2s ease;}
+  .nav-item:hover .nav-trigger{color:var(--text);}
+  .nav-item:hover .nav-trigger svg{transform:rotate(180deg);}
+  .dropdown{
+    position:absolute; top:100%; right:-16px; min-width:260px;
+    background:var(--bg-elev); border:1px solid var(--border); border-radius:14px;
+    padding:10px; box-shadow:0 24px 60px -20px rgba(0,0,0,.7);
+    opacity:0; visibility:hidden; transform:translateY(6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:60;
+  }
+  .nav-item:hover .dropdown{opacity:1; visibility:visible; transform:translateY(0);}
+  .dropdown a{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-radius:9px; font-size:14px; color:var(--text);}
+  .dropdown a:hover{background:rgba(155,93,229,.14);}
+  .dropdown a .tag{font-size:11px; color:var(--cyan); direction:ltr;}
+  .dropdown .divider{height:1px; background:var(--border); margin:6px 4px;}
+
+  .nav-cta{background:linear-gradient(135deg,var(--purple),var(--pink)); padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; color:#fff; white-space:nowrap;}
+
+  .page-head{padding:64px 0 20px; text-align:center;}
+  .page-head h1{font-size:36px; font-weight:900; margin-bottom:14px;}
+  .page-head h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .page-head p{color:var(--muted); font-size:16px; max-width:620px; margin:0 auto;}
+
+  .hero{padding:90px 0 60px; text-align:center;}
+  .hero h1{font-size:44px; font-weight:900; line-height:1.35; max-width:820px; margin:0 auto 22px;}
+  .hero h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p{font-size:17px; color:var(--muted); max-width:640px; margin:0 auto 34px;}
+  .hero-actions{display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:56px;}
+
+  .btn{padding:14px 30px; border-radius:12px; font-weight:700; font-size:15px; display:inline-block; transition:transform .2s ease, box-shadow .2s ease; border:none; cursor:pointer; font-family:'Cairo',sans-serif;}
+  .btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 8px 30px -8px rgba(241,91,181,.55);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 34px -6px rgba(241,91,181,.7);}
+  .btn-ghost{border:1px solid var(--border); color:var(--text); background:rgba(255,255,255,.03);}
+  .btn-ghost:hover{border-color:var(--purple); background:rgba(155,93,229,.08);}
+
+  .terminal{max-width:520px; margin:0 auto; background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; text-align:right; font-family:'Cairo',monospace; box-shadow:0 20px 50px -20px rgba(0,0,0,.6);}
+  .terminal .dots{display:flex; gap:6px; margin-bottom:14px; justify-content:flex-start; flex-direction:row-reverse;}
+  .terminal .dots span{width:10px; height:10px; border-radius:50%; background:#453a63;}
+  .terminal .prompt{color:var(--cyan); font-size:13px; margin-bottom:12px; direction:ltr; text-align:left;}
+  .terminal table{width:100%; border-collapse:collapse; font-size:14px;}
+  .terminal td{padding:7px 0; border-bottom:1px solid rgba(255,255,255,.06); color:var(--muted);}
+  .terminal td:last-child{color:var(--text); font-weight:700; text-align:left; direction:ltr;}
+  .terminal .note{margin-top:12px; font-size:12px; color:#6f6690; direction:ltr; text-align:left;}
+
+  .contact-strip{background:linear-gradient(135deg, rgba(155,93,229,.14), rgba(241,91,181,.10)); border:1px solid var(--border); border-radius:20px; padding:34px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; margin:70px 0;}
+  .contact-strip h3{font-size:22px; margin-bottom:6px;}
+  .contact-strip p{color:var(--muted); font-size:15px;}
+  .contact-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .pill{display:flex; align-items:center; gap:10px; background:var(--bg-elev-2); border:1px solid var(--border); padding:12px 18px; border-radius:12px; font-weight:600; font-size:14px; direction:ltr;}
+  .pill svg{width:20px; height:20px; flex-shrink:0;}
+  .pill.whatsapp svg{color:#25D366;}
+  .pill.email svg{color:var(--cyan);}
+  .pill:hover{border-color:var(--purple);}
+
+  section.block{margin:80px 0; scroll-margin-top:100px;}
+  .section-head{margin-bottom:34px; text-align:center;}
+  .section-head h2{font-size:28px; font-weight:900; margin-bottom:10px;}
+  .section-head p{color:var(--muted); font-size:15px; max-width:520px; margin:0 auto;}
+
+  .grid{display:grid; gap:20px;}
+  .grid-3{grid-template-columns:repeat(3, 1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+
+  .card{background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:26px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+  .card:hover{transform:translateY(-4px); border-color:var(--purple); box-shadow:0 16px 40px -18px rgba(155,93,229,.5);}
+  .icon-badge{width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; background:linear-gradient(135deg, rgba(155,93,229,.25), rgba(241,91,181,.2));}
+  .icon-badge svg{width:24px; height:24px; color:var(--cyan);}
+  .card h3{font-size:17px; margin-bottom:8px; font-family:'Tajawal',sans-serif;}
+  .card h3 .en{direction:ltr; display:inline-block; color:var(--text);}
+  .card p{color:var(--muted); font-size:14px;}
+  .card .tags{margin-top:12px; display:flex; gap:6px; flex-wrap:wrap; direction:ltr;}
+  .card .tags span{font-size:11px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 9px; border-radius:6px;}
+  .card .meta{margin-top:14px; display:flex; gap:14px; font-size:12px; color:#6f6690; direction:ltr; justify-content:flex-end;}
+  .badge-level{display:inline-block; font-size:11px; padding:3px 10px; border-radius:20px; background:rgba(155,93,229,.15); color:var(--purple); margin-bottom:12px;}
+  .badge-level.mid{background:rgba(241,91,181,.15); color:var(--pink);}
+  .badge-level.adv{background:rgba(34,211,238,.15); color:var(--cyan);}
+
+  .form-card{max-width:640px; margin:0 auto; background:var(--bg-elev); border:1px solid var(--border); border-radius:20px; padding:40px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:14px; margin-bottom:8px; color:var(--muted); font-weight:600;}
+  .field input, .field select, .field textarea{
+    width:100%; background:var(--bg-elev-2); border:1px solid var(--border); border-radius:10px;
+    padding:12px 14px; color:var(--text); font-family:'Cairo',sans-serif; font-size:14px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--purple);}
+  .field textarea{min-height:120px; resize:vertical;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .form-note{font-size:13px; color:var(--muted); margin-top:6px; padding:12px 16px; background:rgba(34,211,238,.06); border-radius:10px; border:1px solid rgba(34,211,238,.15);}
+
+  .code-block{background:#0a0614; border:1px solid var(--border); border-radius:12px; padding:20px; font-family:'Cairo',monospace; font-size:13.5px; color:#c9c1e0; direction:ltr; text-align:left; overflow-x:auto; margin:18px 0;}
+  .code-block .kw{color:var(--cyan);}
+  .code-block .cm{color:#6f6690;}
+  .prose{max-width:760px; margin:0 auto;}
+  .prose h2{font-size:22px; margin:36px 0 14px;}
+  .prose p{color:var(--muted); margin-bottom:14px; font-size:15.5px;}
+  .prose ul{margin:0 0 14px 0; padding-right:22px; color:var(--muted);}
+  .prose li{margin-bottom:8px;}
+  .callout{background:rgba(155,93,229,.08); border:1px solid var(--border); border-right:3px solid var(--purple); border-radius:10px; padding:16px 20px; margin:20px 0; font-size:14.5px; color:var(--text);}
+
+  footer{border-top:1px solid var(--border); padding:50px 0 30px; margin-top:60px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:34px;}
+  footer h4{font-size:15px; margin-bottom:14px;}
+  footer p{color:var(--muted); font-size:14px;}
+  footer ul{list-style:none;}
+  footer ul li{margin-bottom:9px;}
+  footer ul a{color:var(--muted); font-size:14px;}
+  footer ul a:hover{color:var(--text);}
+  .footer-bottom{text-align:center; color:#6f6690; font-size:13px; padding-top:24px; border-top:1px solid var(--border);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:26px;}
+    .hero h1{font-size:32px;}
+    .page-head h1{font-size:28px;}
+    .contact-strip{flex-direction:column; align-items:stretch; text-align:center;}
+    .contact-actions{justify-content:center;}
+    .form-card{padding:26px;}
+  }
+  @media (max-width:560px){
+    .grid-3{grid-template-columns:1fr;}
+  }
+
+
+</style>
 </head>
 <body>
-<div class="bg-glow"></div>
-<div class="bg-grid"></div>
-<header class="site-header">
-  <div class="header-inner">
-    <a href="index.html" class="brand">
-      <span class="mark">db&gt;</span>
-      Database Admin School
-    </a>
-    <nav class="main-nav">
-      <ul>
-        <li><a href="index.html">الرئيسية</a></li>
-<li><a href="courses.html">الكورسات</a></li>
-<li><a href="articles.html">المقالات</a></li>
-<li><a href="problems.html">مشاكل وحلول</a></li>
-<li><a href="servers.html">السيرفرات</a></li>
-<li><a href="networks.html">الشبكات</a></li>
-<li><a href="cloud.html">Cloud</a></li>
-<li><a href="helpdesk.html" class="active">الدعم الفني</a></li>
-<li><a href="about.html">عن الموقع</a></li>
 
-      </ul>
+<div class="glow-field">
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+</div>
+
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+      <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <div class="nav-item">
+          <span class="nav-trigger">الكورسات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+          <div class="dropdown"><a href="courses.html#database-administration"><span>Database Administration</span><span class="tag">SQL Server, PostgreSQL, MySQL, Oracle, MongoDB</span></a><a href="courses.html#data-analysis"><span>Data Analysis</span><span class="tag">SQL</span></a><a href="courses.html#data-warehousing"><span>Data Warehousing</span><span class="tag">ETL</span></a><div class="divider"></div><a href="servers.html"><span>Servers</span></a><a href="networks.html"><span>Networking</span></a><a href="cloud.html"><span>Cloud</span><span class="tag">AWS · Azure · GCP</span></a><div class="divider"></div><a href="courses.html#virtualization"><span>Virtualization</span><span class="tag">VMware ESXi</span></a><a href="courses.html#backup"><span>Backup & Recovery</span><span class="tag">Veeam</span></a></div>
+        </div>
+        <a href="articles.html">المقالات</a>
+        <a href="problems.html">مشاكل وحلول</a>
+        <a href="about.html" class="active">عن الموقع</a>
+      </div>
+      <a href="submit.html" class="nav-cta">عندي مشكلة</a>
     </nav>
-    <div class="header-cta">
-      <a href="submit.html" class="btn btn-primary btn-sm"><span class="btn-text">عندي مشكلة</span></a>
-      <button class="menu-toggle" aria-label="فتح القائمة">☰</button>
-    </div>
   </div>
 </header>
 
+<main class="wrap">
+
 <section class="page-head">
-  <div class="wrap">
-    <div class="icon-badge badge-cyan" style="width:64px;height:64px;">
-      <img src="images/icon-helpdesk.svg" alt="" style="width:32px;height:32px;">
+  <h1><span class="grad">الدعم الفني</span> لأي مشكلة عاجلة</h1>
+  <p>لو محتاج مساعدة سريعة في مشكلة شغالة عليك دلوقتي، كلمنا مباشرة.</p>
+</section>
+
+<section class="block">
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a7 7 0 0 0-7 7v3a2 2 0 0 0 2 2h1v-6H6v-1a6 6 0 0 1 12 0v1h-2v6h1a2 2 0 0 0 2-2v-3a7 7 0 0 0-7-7Z"/><path d="M9 20a3 3 0 0 0 6 0"/></svg></div>
+      <h3>دعم عاجل</h3>
+      <p>مشاكل السيرفرات المتوقفة أو فقدان البيانات — رد سريع على واتساب.</p>
     </div>
-    <h1>الدعم الفني</h1>
+    <div class="card">
+      <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="8" r="2.5"/><path d="M23 20c0-2.5-2-4.7-4.8-5.6"/></svg></div>
+      <h3>استشارات ومشاريع</h3>
+      <p>تاسكاليات، مشاريع تخرج، أو أعمال فريلانس — ابعت التفاصيل وهنتواصل.</p>
+    </div>
   </div>
 </section>
 
-<div class="wrap">
-  
-</div>
 
-<div class="empty-page">
-  <img class="illus" src="images/illustration-building.svg" alt="القسم قيد الإنشاء">
-  <h1>قسم الدعم الفني قيد الإعداد</h1>
-  <p>حلول عملية لمشاكل الدعم الفني وHelp Desk اليومية اللي بتقابل أي فريق IT، من تذاكر الأعطال لحد إدارة طلبات المستخدمين.</p>
-  <p style="font-weight:700;color:var(--text);">عندك تذكرة دعم فني محتاجة مساعدة فيها؟</p>
-  <div class="btn-row">
-    <a href="submit.html" class="btn btn-primary">ابعتلي التفاصيل</a>
-    <a href="https://wa.me/201016406481" target="_blank" rel="noopener" class="btn btn-secondary">تواصل واتساب</a>
+  <div class="contact-strip">
+    <div>
+      <h3>تاسكاية جامعية، مشروع تخرج، أو مشكلة سيرفر محتاجة حل سريع؟</h3>
+      <p>ابعتلي التفاصيل مباشرة وهرد عليك بسرعة.</p>
+    </div>
+    <div class="contact-actions">
+      <a class="pill whatsapp" href="https://wa.me/201016406481" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.02.24-3.44-.72-2.9-1.16-4.77-4.1-4.92-4.29-.14-.19-1.17-1.56-1.17-2.98s.73-2.11 1-2.4c.24-.28.53-.35.7-.35.18 0 .35 0 .5.01.16.01.38-.06.6.45.24.55.8 1.9.87 2.04.07.14.12.31.02.5-.1.19-.15.31-.3.48-.14.17-.3.38-.43.5-.14.14-.29.29-.13.57.17.28.74 1.22 1.6 1.98 1.1.98 2.03 1.28 2.31 1.42.28.14.44.12.6-.07.17-.19.7-.81.89-1.09.19-.28.38-.23.63-.14.26.1 1.6.76 1.88.9.28.14.46.21.53.33.07.12.07.68-.17 1.36Z"/></svg>
+        01016406481
+      </a>
+      <a class="pill email" href="mailto:barakatramadan394@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><path d="M3 6h18v12H3z"/></svg>
+        barakatramadan394@gmail.com
+      </a>
+    </div>
   </div>
-</div>
 
-<footer class="site-footer">
+
+</main>
+
+<footer>
   <div class="wrap">
     <div class="footer-grid">
-      <div class="footer-col">
-        <h4>Database Admin School</h4>
-        <p>مصدر عربي شامل لكل حاجة في عالم البيانات والبنية التحتية: إدارة قواعد البيانات، تحليل البيانات، مستودعات البيانات، Cloud، السيرفرات، والشبكات — على أي نظام أو منصة.</p>
+      <div>
+        <div class="brand" style="margin-bottom:14px;"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+        <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
       </div>
-      <div class="footer-col">
+      <div>
         <h4>روابط سريعة</h4>
         <ul>
           <li><a href="courses.html">الكورسات</a></li>
           <li><a href="articles.html">المقالات</a></li>
           <li><a href="problems.html">مشاكل وحلول</a></li>
-          <li><a href="submit.html">إرسال مشكلة</a></li>
           <li><a href="about.html">عن الموقع</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>تواصل معايا مباشرة</h4>
-        <div class="footer-contact">📱 <b dir="ltr">01016406481</b></div>
-        <div class="footer-contact">✉️ <b dir="ltr">barakatramadan394@gmail.com</b></div>
-        <p>عندك تاسكاية أو مشروع تخرج؟ <a href="submit.html" style="color:var(--cyan);font-weight:700;">ابعتلي التفاصيل من هنا</a></p>
+      <div>
+        <h4>تواصل</h4>
+        <ul>
+          <li><a href="https://wa.me/201016406481">01016406481</a></li>
+          <li><a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Database Admin School — الموقع لسه بيتبنى، والمحتوى بيتزود أول بأول.</span>
-      <span>صُنع بشغف لمجتمع الـ DBAs العرب</span>
-    </div>
+    <div class="footer-bottom">© 2026 Database Admin School — كل الحقوق محفوظة</div>
   </div>
 </footer>
-<script src="script.js"></script>
+
 </body>
 </html>
