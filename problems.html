@@ -1,61 +1,97 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مشاكل وحلول · Database Admin School</title>
-  <link rel="stylesheet" href="style.css">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشاكل وحلول | Database Admin School</title>
+<meta name="description" content="مشاكل وحلول في Database Admin School — هنا هيبقى أرشيف كامل لمشاكل حقيقية واجهناها في شغل الداتا والبنية التحتية — الخطأ، السبب، وخطوات الح">
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-row wrap">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">db&gt;_</span>
-        <span class="brand-name">Database Admin <span>School</span></span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
-      <ul class="nav-links" id="navLinks">
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="mark">db&gt;</span>
+      Database Admin School
+    </a>
+    <nav class="main-nav">
+      <ul>
         <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="courses.html">الكورسات</a></li>
-        <li><a href="articles.html">المقالات</a></li>
-        <li><a href="problems.html" aria-current="page">مشاكل وحلول</a></li>
-        <li><a href="servers.html">السيرفرات</a></li>
-        <li><a href="networks.html">الشبكات</a></li>
-        <li><a href="helpdesk.html">الدعم الفني</a></li>
-        <li><a href="lesson.html">نموذج درس</a></li>
-        <li><a href="about.html">عن الموقع</a></li>
-        
+<li><a href="courses.html">الكورسات</a></li>
+<li><a href="articles.html">المقالات</a></li>
+<li><a href="problems.html" class="active">مشاكل وحلول</a></li>
+<li><a href="servers.html">السيرفرات</a></li>
+<li><a href="networks.html">الشبكات</a></li>
+<li><a href="cloud.html">Cloud</a></li>
+<li><a href="helpdesk.html">الدعم الفني</a></li>
+<li><a href="about.html">عن الموقع</a></li>
+
       </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="submit.html" class="btn btn-primary btn-sm"><span class="btn-text">عندي مشكلة</span></a>
+      <button class="menu-toggle" aria-label="فتح القائمة">☰</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section style="padding-top:40px;">
-      <div class="wrap">
-        <div class="section-head"><h2>مشاكل وحلول</h2></div>
-        
-        <div class="empty-state" id="emptyState">
-          <img class="empty-illustration" src="illustration-building.svg" alt="الصفحة قيد التجهيز">
-          <p>الأرشيف ده هيتملى بمشاكل حقيقية واجهناها في السيرفرات (زي مشاكل الـ backup والـ recovery) مع خطوات الحل بالتفصيل.</p>
-          <a href="submit.html" class="btn btn-ghost">اقترح موضوع تحب نغطيه</a>
-        </div>
+<section class="page-head">
+  <div class="wrap">
+    <div class="icon-badge badge-pink" style="width:64px;height:64px;">
+      <img src="images/icon-problems.svg" alt="" style="width:32px;height:32px;">
+    </div>
+    <h1>مشاكل وحلول</h1>
+  </div>
+</section>
+
+<div class="wrap">
+  
+</div>
+
+<div class="empty-page">
+  <img class="illus" src="images/illustration-building.svg" alt="القسم قيد الإنشاء">
+  <h1>أرشيف المشاكل بيتجهز</h1>
+  <p>هنا هيبقى أرشيف كامل لمشاكل حقيقية واجهناها في شغل الداتا والبنية التحتية — الخطأ، السبب، وخطوات الحل بالتفصيل.</p>
+  <p style="font-weight:700;color:var(--text);">عندك مشكلة دلوقتي تحتاج حل سريع؟</p>
+  <div class="btn-row">
+    <a href="submit.html" class="btn btn-primary">ابعتلي التفاصيل</a>
+    <a href="https://wa.me/201016406481" target="_blank" rel="noopener" class="btn btn-secondary">تواصل واتساب</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Database Admin School</h4>
+        <p>مصدر عربي شامل لكل حاجة في عالم البيانات والبنية التحتية: إدارة قواعد البيانات، تحليل البيانات، مستودعات البيانات، Cloud، السيرفرات، والشبكات — على أي نظام أو منصة.</p>
       </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
-      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات، الشبكات، والسيرفرات</span>
-      <span style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a>
-        <a href="https://wa.me/201016406481" target="_blank" rel="noopener" style="direction:ltr;">01016406481</a>
-        <a href="submit.html">الإبلاغ عن مشكلة</a>
-      </span>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="submit.html">إرسال مشكلة</a></li>
+          <li><a href="about.html">عن الموقع</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معايا مباشرة</h4>
+        <div class="footer-contact">📱 <b dir="ltr">01016406481</b></div>
+        <div class="footer-contact">✉️ <b dir="ltr">barakatramadan394@gmail.com</b></div>
+        <p>عندك تاسكاية أو مشروع تخرج؟ <a href="submit.html" style="color:var(--cyan);font-weight:700;">ابعتلي التفاصيل من هنا</a></p>
+      </div>
     </div>
-  </footer>
-
-  <script src="script.js"></script>
-
+    <div class="footer-bottom">
+      <span>© 2026 Database Admin School — الموقع لسه بيتبنى، والمحتوى بيتزود أول بأول.</span>
+      <span>صُنع بشغف لمجتمع الـ DBAs العرب</span>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>

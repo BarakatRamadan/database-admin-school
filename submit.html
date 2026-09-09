@@ -1,111 +1,133 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إرسال مشكلة · Database Admin School</title>
-  <link rel="stylesheet" href="style.css">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إرسال مشكلة | Database Admin School</title>
+<meta name="description" content="ابعت مشكلتك، تاسكايتك، أو مشروع تخرجك في قواعد البيانات أو Cloud أو السيرفرات وهنساعدك نلاقي الحل.">
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-row wrap">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">db&gt;_</span>
-        <span class="brand-name">Database Admin <span>School</span></span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
-      <ul class="nav-links" id="navLinks">
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="mark">db&gt;</span>
+      Database Admin School
+    </a>
+    <nav class="main-nav">
+      <ul>
         <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="courses.html">الكورسات</a></li>
-        <li><a href="articles.html">المقالات</a></li>
-        <li><a href="problems.html">مشاكل وحلول</a></li>
-        <li><a href="servers.html">السيرفرات</a></li>
-        <li><a href="networks.html">الشبكات</a></li>
-        <li><a href="helpdesk.html">الدعم الفني</a></li>
-        <li><a href="lesson.html">نموذج درس</a></li>
-        <li><a href="about.html">عن الموقع</a></li>
-        
+<li><a href="courses.html">الكورسات</a></li>
+<li><a href="articles.html">المقالات</a></li>
+<li><a href="problems.html">مشاكل وحلول</a></li>
+<li><a href="servers.html">السيرفرات</a></li>
+<li><a href="networks.html">الشبكات</a></li>
+<li><a href="cloud.html">Cloud</a></li>
+<li><a href="helpdesk.html">الدعم الفني</a></li>
+<li><a href="about.html">عن الموقع</a></li>
+
       </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="submit.html" class="btn btn-primary btn-sm"><span class="btn-text">عندي مشكلة</span></a>
+      <button class="menu-toggle" aria-label="فتح القائمة">☰</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section style="padding-top:40px;">
-      <div class="wrap">
-        <div class="section-head"><h2>إرسال مشكلة أو طلب مساعدة</h2></div>
-        <div class="page-icon-row"><div class="icon-badge"><img src="icon-submit.svg" alt=""></div></div>
+<section class="page-head">
+  <div class="wrap">
+    <div class="icon-badge badge-amber" style="width:64px;height:64px;">
+      <img src="images/icon-submit.svg" alt="" style="width:32px;height:32px;">
+    </div>
+    <h1>عندك مشكلة، تاسكاية، أو مشروع تخرج؟</h1>
+    <p>ابعتلي التفاصيل من هنا، أو كلمني مباشرة على واتساب أو إيميل — ده بالظبط سبب وجود الموقع ده.</p>
+  </div>
+</section>
 
-        <div class="contact-links" style="flex-direction:row; flex-wrap:wrap; margin-bottom:26px;">
-          <a class="contact-link" href="https://wa.me/201016406481" target="_blank" rel="noopener" style="flex:1; min-width:220px;">
-            <div class="icon-badge"><img src="icon-whatsapp.svg" alt=""></div>
-            <div class="cl-text"><span class="cl-label">واتساب مباشر</span><span class="cl-value">01016406481</span></div>
-          </a>
-          <a class="contact-link" href="mailto:barakatramadan394@gmail.com" style="flex:1; min-width:220px;">
-            <div class="icon-badge"><img src="icon-email.svg" alt=""></div>
-            <div class="cl-text"><span class="cl-label">إيميل</span><span class="cl-value">barakatramadan394@gmail.com</span></div>
-          </a>
+<section class="section" style="padding-top:20px;">
+  <div class="wrap">
+    <div style="max-width:640px;margin:0 auto 28px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <a class="contact-row" style="flex:1;min-width:220px;" href="https://wa.me/201016406481" target="_blank" rel="noopener">
+        <span class="ic"><img src="images/icon-whatsapp.svg" alt=""></span>
+        <span class="info"><b>واتساب مباشر</b><span>01016406481</span></span>
+      </a>
+      <a class="contact-row" style="flex:1;min-width:220px;" href="mailto:barakatramadan394@gmail.com">
+        <span class="ic"><img src="images/icon-mail.svg" alt=""></span>
+        <span class="info"><b>إيميل</b><span>barakatramadan394@gmail.com</span></span>
+      </a>
+    </div>
+
+    <div class="form-card">
+      <form id="problem-form">
+        <div class="form-row">
+          <label for="name">اسمك</label>
+          <input type="text" id="name" name="name" placeholder="اكتب اسمك" required>
         </div>
-
-        <form class="form-panel" action="mailto:barakatramadan394@gmail.com" method="post" enctype="text/plain">
-          <div class="field">
-            <label for="reqtype">نوع الطلب</label>
-            <select id="reqtype" name="reqtype">
-              <option>تاسكاية / واجب دراسي</option>
-              <option>مشروع تخرج</option>
-              <option>مشروع (فريلانس)</option>
-              <option>مشكلة في سيرفر / قاعدة بيانات</option>
-              <option>استشارة سريعة</option>
-              <option>غير ذلك</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="title">عنوان الطلب أو المشكلة</label>
-            <input type="text" id="title" name="title" placeholder="مثال: مشروع تخرج نظام إدارة مخزون بـSQL Server">
-          </div>
-          <div class="field">
-            <label for="system">النظام</label>
-            <select id="system" name="system">
-              <option>SQL Server</option>
-              <option>PostgreSQL</option>
-              <option>MySQL</option>
-              <option>Oracle</option>
-              <option>MongoDB</option>
-              <option>تحليل بيانات / BI</option>
-              <option>مستودع بيانات (Data Warehouse)</option>
-              <option>سيرفرات / شبكات</option>
-              <option>Veeam / أدوات باكب</option>
-              <option>غير ذلك</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="desc">التفاصيل</label>
-            <textarea id="desc" name="desc" placeholder="اشرح المطلوب أو المشكلة، وأي خطوات عملتها قبل كده، والموعد النهائي لو في وقت محدد"></textarea>
-          </div>
-          <div class="field">
-            <label for="shot">إرفاق صورة (اختياري)</label>
-            <input type="file" id="shot" name="shot" accept="image/*">
-            <p class="field-hint">لقطة شاشة أو ملف يوضّح المطلوب بيساعد نبدأ أسرع.</p>
-          </div>
-          <button type="submit" class="btn btn-primary">إرسال</button>
-        </form>
-        <p class="field-hint" style="margin-top:14px;">الأسرع دايمًا إنك تتواصل مباشر على واتساب أو الإيميل فوق، والفورم بديل لو حابب تبعت التفاصيل مكتوبة.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
-      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات، الشبكات، والسيرفرات</span>
-      <span style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a>
-        <a href="https://wa.me/201016406481" target="_blank" rel="noopener" style="direction:ltr;">01016406481</a>
-        <a href="submit.html">الإبلاغ عن مشكلة</a>
-      </span>
+        <div class="form-row">
+          <label for="contact">رقم موبايل أو إيميل للتواصل</label>
+          <input type="text" id="contact" name="contact" placeholder="رقمك أو إيميلك" required>
+        </div>
+        <div class="form-row">
+          <label for="type">نوع الطلب</label>
+          <select id="type" name="type" required>
+            <option value="">اختار نوع الطلب</option>
+            <option value="تاسكاية جامعية">تاسكاية جامعية</option>
+            <option value="مشروع تخرج">مشروع تخرج</option>
+            <option value="مشروع فريلانس">مشروع فريلانس</option>
+            <option value="مشكلة سيرفر أو قاعدة بيانات">مشكلة سيرفر أو قاعدة بيانات</option>
+            <option value="استشارة فنية">استشارة فنية</option>
+            <option value="حاجة تانية">حاجة تانية</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="system">النظام أو الأداة (لو معروفة)</label>
+          <input type="text" id="system" name="system" placeholder="مثال: SQL Server, PostgreSQL, MySQL, Oracle, MongoDB, AWS, Azure...">
+        </div>
+        <div class="form-row">
+          <label for="details">تفاصيل الطلب أو المشكلة</label>
+          <textarea id="details" name="details" placeholder="اشرح المشكلة أو التاسكاية بالتفصيل قد ما تقدر" required></textarea>
+          <p class="form-hint">لو عندك صورة للمشكلة (Screenshot)، ابعتها بعد كده على واتساب أو الإيميل بعد ما تبعت الفورم.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">ابعت الطلب</button>
+      </form>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
-
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Database Admin School</h4>
+        <p>مصدر عربي شامل لكل حاجة في عالم البيانات والبنية التحتية: إدارة قواعد البيانات، تحليل البيانات، مستودعات البيانات، Cloud، السيرفرات، والشبكات — على أي نظام أو منصة.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="submit.html">إرسال مشكلة</a></li>
+          <li><a href="about.html">عن الموقع</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معايا مباشرة</h4>
+        <div class="footer-contact">📱 <b dir="ltr">01016406481</b></div>
+        <div class="footer-contact">✉️ <b dir="ltr">barakatramadan394@gmail.com</b></div>
+        <p>عندك تاسكاية أو مشروع تخرج؟ <a href="submit.html" style="color:var(--cyan);font-weight:700;">ابعتلي التفاصيل من هنا</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Database Admin School — الموقع لسه بيتبنى، والمحتوى بيتزود أول بأول.</span>
+      <span>صُنع بشغف لمجتمع الـ DBAs العرب</span>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>

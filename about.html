@@ -1,58 +1,133 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عن الموقع · Database Admin School</title>
-  <link rel="stylesheet" href="style.css">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عن الموقع | Database Admin School</title>
+<meta name="description" content="تعرف على Database Admin School: مين احنا وليه الموقع اتعمل وإزاي تستفيد منه.">
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-row wrap">
-      <a href="index.html" class="brand">
-        <span class="brand-mark">db&gt;_</span>
-        <span class="brand-name">Database Admin <span>School</span></span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
-      <ul class="nav-links" id="navLinks">
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="mark">db&gt;</span>
+      Database Admin School
+    </a>
+    <nav class="main-nav">
+      <ul>
         <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="courses.html">الكورسات</a></li>
-        <li><a href="articles.html">المقالات</a></li>
-        <li><a href="problems.html">مشاكل وحلول</a></li>
-        <li><a href="servers.html">السيرفرات</a></li>
-        <li><a href="networks.html">الشبكات</a></li>
-        <li><a href="helpdesk.html">الدعم الفني</a></li>
-        <li><a href="lesson.html">نموذج درس</a></li>
-        <li><a href="about.html" aria-current="page">عن الموقع</a></li>
-        
+<li><a href="courses.html">الكورسات</a></li>
+<li><a href="articles.html">المقالات</a></li>
+<li><a href="problems.html">مشاكل وحلول</a></li>
+<li><a href="servers.html">السيرفرات</a></li>
+<li><a href="networks.html">الشبكات</a></li>
+<li><a href="cloud.html">Cloud</a></li>
+<li><a href="helpdesk.html">الدعم الفني</a></li>
+<li><a href="about.html" class="active">عن الموقع</a></li>
+
       </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="submit.html" class="btn btn-primary btn-sm"><span class="btn-text">عندي مشكلة</span></a>
+      <button class="menu-toggle" aria-label="فتح القائمة">☰</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section style="padding-top:40px;">
-      <div class="wrap" style="max-width:720px;">
-        <div class="section-head"><h2>عن الموقع</h2></div>
-        <img class="about-illustration" src="illustration-about.svg" alt="شبكة تربط أنواع مختلفة من قواعد البيانات">
-        <p style="color:var(--text-muted); margin-bottom:14px;">Database Admin School موقع بيوثّق مشاكل وحلول حقيقية من شغل يومي في عالم البيانات، بيغطي 3 محاور رئيسية: إدارة قواعد البيانات (Database Management)، تحليل البيانات (Data Analysis)، ومستودعات البيانات (Data Warehousing) — على أي محرك قواعد بيانات (SQL Server, PostgreSQL, MySQL, Oracle, MongoDB وغيرهم)، مش مقتصر على نظام واحد.</p>
-        <p style="color:var(--text-muted);">الهدف إن أي حد شغال في البيانات يلاقي هنا حل عملي لمشكلة واجهته، مش شرح نظري بس.</p>
+<section class="page-head">
+  <div class="wrap">
+    <div class="icon-badge badge-pink" style="width:64px;height:64px;">
+      <img src="images/icon-about.svg" alt="" style="width:32px;height:32px;">
+    </div>
+    <h1>عن الموقع</h1>
+    <p>Database Admin School مش موقع شرح نظري، ده أرشيف حي لمشاكل وحلول حقيقية من شغل يومي في عالم البيانات والبنية التحتية.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap hero-grid">
+    <div>
+      <h2 style="font-size:26px;font-weight:800;margin-bottom:14px;">مش مجال واحد، ده كل الصورة</h2>
+      <p style="color:var(--muted);font-size:16px;margin-bottom:18px;">
+        الموقع بيغطي 6 مجالات مترابطة: إدارة قواعد البيانات (Database Management)، تحليل البيانات
+        (Data Analysis)، مستودعات البيانات (Data Warehousing)، الـ Cloud، السيرفرات، والشبكات —
+        على أي نظام أو منصة: SQL Server، PostgreSQL، MySQL، Oracle، MongoDB، AWS، Azure وغيرهم.
+        مش هتلاقي نفسك محصور في نظام واحد أو تقنية واحدة.
+      </p>
+      <p style="color:var(--muted);font-size:16px;margin-bottom:18px;">
+        الهدف إن أي حد شغال في الداتا أو البنية التحتية — DBA، محلل بيانات، مهندس Cloud، أو مسؤول
+        سيرفرات وشبكات — يلاقي هنا حل عملي لمشكلة واجهته فعلًا في شغله، مش شرح نظري بيتقري ومحدش بيطبقه.
+      </p>
+      <p style="color:var(--muted);font-size:16px;">
+        وباب الموقع مفتوح دايمًا: لو عندك مشكلة، تاسكاية جامعية، أو مشروع تخرج محتاج مساعدة فيه،
+        <a href="submit.html" style="color:var(--cyan);font-weight:700;">ابعتلي التفاصيل من هنا</a>.
+      </p>
+    </div>
+    <div>
+      <img src="images/illustration-network.svg" alt="شبكة توضح ترابط مجالات الموقع المختلفة">
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>باختصار</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon-badge badge-violet"><img src="images/icon-db-management.svg" alt=""></div>
+        <h3>شامل مش محصور</h3>
+        <p>كل حل بيتكتب بحيث ينفع مع أي نظام أو منصة، مش SQL Server بس أو AWS بس.</p>
       </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
-      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات، الشبكات، والسيرفرات</span>
-      <span style="display:flex; gap:16px; flex-wrap:wrap;">
-        <a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a>
-        <a href="https://wa.me/201016406481" target="_blank" rel="noopener" style="direction:ltr;">01016406481</a>
-        <a href="submit.html">الإبلاغ عن مشكلة</a>
-      </span>
+      <div class="card">
+        <div class="icon-badge badge-cyan"><img src="images/icon-problems.svg" alt=""></div>
+        <h3>مشاكل حقيقية</h3>
+        <p>كل مشكلة على الموقع فعلًا حصلت في شغل حقيقي، مش سيناريو افتراضي.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge badge-pink"><img src="images/icon-submit.svg" alt=""></div>
+        <h3>باب مفتوح دايمًا</h3>
+        <p>تقدر تبعت مشكلتك أو تاسكايتك في أي وقت، وهنساعدك نلاقي الحل مع بعض.</p>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
-
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Database Admin School</h4>
+        <p>مصدر عربي شامل لكل حاجة في عالم البيانات والبنية التحتية: إدارة قواعد البيانات، تحليل البيانات، مستودعات البيانات، Cloud، السيرفرات، والشبكات — على أي نظام أو منصة.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="submit.html">إرسال مشكلة</a></li>
+          <li><a href="about.html">عن الموقع</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معايا مباشرة</h4>
+        <div class="footer-contact">📱 <b dir="ltr">01016406481</b></div>
+        <div class="footer-contact">✉️ <b dir="ltr">barakatramadan394@gmail.com</b></div>
+        <p>عندك تاسكاية أو مشروع تخرج؟ <a href="submit.html" style="color:var(--cyan);font-weight:700;">ابعتلي التفاصيل من هنا</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Database Admin School — الموقع لسه بيتبنى، والمحتوى بيتزود أول بأول.</span>
+      <span>صُنع بشغف لمجتمع الـ DBAs العرب</span>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
