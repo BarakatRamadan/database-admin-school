@@ -20,6 +20,9 @@
         <li><a href="courses.html">الكورسات</a></li>
         <li><a href="articles.html">المقالات</a></li>
         <li><a href="problems.html">مشاكل وحلول</a></li>
+        <li><a href="servers.html">السيرفرات</a></li>
+        <li><a href="networks.html">الشبكات</a></li>
+        <li><a href="helpdesk.html">الدعم الفني</a></li>
         <li><a href="lesson.html">نموذج درس</a></li>
         <li><a href="about.html">عن الموقع</a></li>
         
@@ -30,12 +33,35 @@
   <main>
     <section style="padding-top:40px;">
       <div class="wrap">
-        <div class="section-head"><h2>إرسال مشكلة</h2></div>
-        <div class="page-icon-row"><img src="icon-submit.svg" alt=""></div>
-        <form class="form-panel" action="mailto:contact@example.com" method="post" enctype="text/plain">
+        <div class="section-head"><h2>إرسال مشكلة أو طلب مساعدة</h2></div>
+        <div class="page-icon-row"><div class="icon-badge"><img src="icon-submit.svg" alt=""></div></div>
+
+        <div class="contact-links" style="flex-direction:row; flex-wrap:wrap; margin-bottom:26px;">
+          <a class="contact-link" href="https://wa.me/201016406481" target="_blank" rel="noopener" style="flex:1; min-width:220px;">
+            <div class="icon-badge"><img src="icon-whatsapp.svg" alt=""></div>
+            <div class="cl-text"><span class="cl-label">واتساب مباشر</span><span class="cl-value">01016406481</span></div>
+          </a>
+          <a class="contact-link" href="mailto:barakatramadan394@gmail.com" style="flex:1; min-width:220px;">
+            <div class="icon-badge"><img src="icon-email.svg" alt=""></div>
+            <div class="cl-text"><span class="cl-label">إيميل</span><span class="cl-value">barakatramadan394@gmail.com</span></div>
+          </a>
+        </div>
+
+        <form class="form-panel" action="mailto:barakatramadan394@gmail.com" method="post" enctype="text/plain">
           <div class="field">
-            <label for="title">عنوان المشكلة</label>
-            <input type="text" id="title" name="title" placeholder="مثال: Recovery Pending بعد فشل الـ backup">
+            <label for="reqtype">نوع الطلب</label>
+            <select id="reqtype" name="reqtype">
+              <option>تاسكاية / واجب دراسي</option>
+              <option>مشروع تخرج</option>
+              <option>مشروع (فريلانس)</option>
+              <option>مشكلة في سيرفر / قاعدة بيانات</option>
+              <option>استشارة سريعة</option>
+              <option>غير ذلك</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="title">عنوان الطلب أو المشكلة</label>
+            <input type="text" id="title" name="title" placeholder="مثال: مشروع تخرج نظام إدارة مخزون بـSQL Server">
           </div>
           <div class="field">
             <label for="system">النظام</label>
@@ -47,30 +73,35 @@
               <option>MongoDB</option>
               <option>تحليل بيانات / BI</option>
               <option>مستودع بيانات (Data Warehouse)</option>
+              <option>سيرفرات / شبكات</option>
               <option>Veeam / أدوات باكب</option>
               <option>غير ذلك</option>
             </select>
           </div>
           <div class="field">
-            <label for="desc">وصف المشكلة</label>
-            <textarea id="desc" name="desc" placeholder="اشرح المشكلة، والخطوات اللي عملتها قبل ما تظهر"></textarea>
+            <label for="desc">التفاصيل</label>
+            <textarea id="desc" name="desc" placeholder="اشرح المطلوب أو المشكلة، وأي خطوات عملتها قبل كده، والموعد النهائي لو في وقت محدد"></textarea>
           </div>
           <div class="field">
             <label for="shot">إرفاق صورة (اختياري)</label>
             <input type="file" id="shot" name="shot" accept="image/*">
-            <p class="field-hint">لقطة شاشة للخطأ بتساعدنا نشخّص المشكلة أسرع.</p>
+            <p class="field-hint">لقطة شاشة أو ملف يوضّح المطلوب بيساعد نبدأ أسرع.</p>
           </div>
           <button type="submit" class="btn btn-primary">إرسال</button>
         </form>
-        <p class="field-hint" style="margin-top:14px;">ملاحظة: الفورم ده حاليًا بيفتح البريد الإلكتروني مباشرة لحد ما نربطه بخدمة استقبال طلبات مخصّصة.</p>
+        <p class="field-hint" style="margin-top:14px;">الأسرع دايمًا إنك تتواصل مباشر على واتساب أو الإيميل فوق، والفورم بديل لو حابب تبعت التفاصيل مكتوبة.</p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
-      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات</span>
-      <a href="submit.html">الإبلاغ عن مشكلة</a>
+      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات، الشبكات، والسيرفرات</span>
+      <span style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a>
+        <a href="https://wa.me/201016406481" target="_blank" rel="noopener" style="direction:ltr;">01016406481</a>
+        <a href="submit.html">الإبلاغ عن مشكلة</a>
+      </span>
     </div>
   </footer>
 
