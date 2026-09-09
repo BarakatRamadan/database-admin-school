@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الرئيسية · Database Admin School</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-row wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">db&gt;_</span>
+        <span class="brand-name">Database Admin <span>School</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-current="page">الرئيسية</a></li>
+        <li><a href="courses.html">الكورسات</a></li>
+        <li><a href="articles.html">المقالات</a></li>
+        <li><a href="problems.html">مشاكل وحلول</a></li>
+        <li><a href="lesson.html">نموذج درس</a></li>
+        <li><a href="about.html">عن الموقع</a></li>
+        
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>مدرسة عملية لإدارة قواعد البيانات، من واقع الشغل مش من الكتاب بس</h1>
+          <p class="lede">دروس ومقالات وحلول لمشاكل حقيقية واجهتها في SQL Server وPostgreSQL، وباب مفتوح لإرسال أي مشكلة بتواجهك وإحنا نساعدك فيها.</p>
+          <div class="hero-ctas">
+            <a href="courses.html" class="btn btn-primary">ابدأ بالكورسات</a>
+            <a href="submit.html" class="btn btn-ghost">عندي مشكلة، محتاج مساعدة</a>
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="terminal-title">admin@dbaschool</span>
+          </div>
+          <div class="terminal-body">
+            <div><span class="prompt">db&gt;</span> <span class="query">SELECT * FROM site_stats;<span class="cursor"></span></span></div>
+            <table class="result-table">
+              <tr><th>القسم</th><th>العدد</th></tr>
+              <tr><td>الدروس المتاحة</td><td class="num">0</td></tr>
+              <tr><td>المقالات المنشورة</td><td class="num">0</td></tr>
+              <tr><td>مشاكل تم حلها</td><td class="num">0</td></tr>
+            </table>
+            <div class="result-note">-- الموقع لسه بيتبنى، الأرقام هتتحدث أول ما نضيف محتوى</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><h2>أقسام الموقع</h2></div>
+        <div class="card-grid">
+          <a class="card" href="courses.html">
+            <span class="tag">دروس</span>
+            <h3>الكورسات</h3>
+            <p>مسارات تعليمية مرتبة من الأساسيات لحد الاحتراف في SQL Server وPostgreSQL.</p>
+          </a>
+          <a class="card" href="articles.html">
+            <span class="tag">مقالات</span>
+            <h3>المقالات</h3>
+            <p>مقالات تقنية قصيرة تشرح مفهوم أو تحل مشكلة محددة.</p>
+          </a>
+          <a class="card" href="problems.html">
+            <span class="tag">حلول</span>
+            <h3>مشاكل وحلول</h3>
+            <p>أرشيف لمشاكل حقيقية واجهناها في السيرفرات مع خطوات الحل.</p>
+          </a>
+          <a class="card" href="submit.html">
+            <span class="tag">دعم</span>
+            <h3>إرسال مشكلة</h3>
+            <p>عندك مشكلة في السيرفر بتاعك؟ ابعتها لينا مع صورة وهنساعدك.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
+      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات</span>
+      <a href="submit.html">الإبلاغ عن مشكلة</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

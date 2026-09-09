@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إرسال مشكلة · Database Admin School</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-row wrap">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">db&gt;_</span>
+        <span class="brand-name">Database Admin <span>School</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="courses.html">الكورسات</a></li>
+        <li><a href="articles.html">المقالات</a></li>
+        <li><a href="problems.html">مشاكل وحلول</a></li>
+        <li><a href="lesson.html">نموذج درس</a></li>
+        <li><a href="about.html">عن الموقع</a></li>
+        
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section style="padding-top:40px;">
+      <div class="wrap">
+        <div class="section-head"><h2>إرسال مشكلة</h2></div>
+        <form class="form-panel" action="mailto:contact@example.com" method="post" enctype="text/plain">
+          <div class="field">
+            <label for="title">عنوان المشكلة</label>
+            <input type="text" id="title" name="title" placeholder="مثال: Recovery Pending بعد فشل الـ backup">
+          </div>
+          <div class="field">
+            <label for="system">النظام</label>
+            <select id="system" name="system">
+              <option>SQL Server</option>
+              <option>PostgreSQL</option>
+              <option>Veeam / أدوات باكب</option>
+              <option>غير ذلك</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="desc">وصف المشكلة</label>
+            <textarea id="desc" name="desc" placeholder="اشرح المشكلة، والخطوات اللي عملتها قبل ما تظهر"></textarea>
+          </div>
+          <div class="field">
+            <label for="shot">إرفاق صورة (اختياري)</label>
+            <input type="file" id="shot" name="shot" accept="image/*">
+            <p class="field-hint">لقطة شاشة للخطأ بتساعدنا نشخّص المشكلة أسرع.</p>
+          </div>
+          <button type="submit" class="btn btn-primary">إرسال</button>
+        </form>
+        <p class="field-hint" style="margin-top:14px;">ملاحظة: الفورم ده حاليًا بيفتح البريد الإلكتروني مباشرة لحد ما نربطه بخدمة استقبال طلبات مخصّصة.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; width:100%;">
+      <span>Database Admin School &mdash; محتوى تقني لإدارة قواعد البيانات</span>
+      <a href="submit.html">الإبلاغ عن مشكلة</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
