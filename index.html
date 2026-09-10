@@ -47,8 +47,13 @@
 
   header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
   nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
-  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:8px;}
-  .brand img{height:40px; width:auto; display:block;}
+  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:11px;}
+  .brand img{height:42px; width:auto; display:block; filter:drop-shadow(0 6px 16px rgba(155,93,229,.55));}
+  .brand-text{display:flex; flex-direction:column; line-height:1.15;}
+  .brand-text .name{background:linear-gradient(135deg,var(--purple),var(--pink) 65%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:19px; font-weight:900; direction:ltr;}
+  .brand-text .tagline{font-size:10px; font-weight:600; letter-spacing:.14em; color:var(--muted); direction:ltr;}
+  footer .brand img{height:36px;}
+  footer .brand-text .name{font-size:17px;}
   .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
   .nav-links > a:hover{color:var(--text);}
   .nav-links > a.active{color:var(--text);}
@@ -286,7 +291,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand"><img src="logo.png" alt="Database School"></div>
+      <div class="brand"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></div>
       <div class="nav-links">
         <a href="index.html" class="active">الرئيسية</a>
         <div class="nav-item">
@@ -495,7 +500,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"></div>
+        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></div>
         <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
       </div>
       <div>
