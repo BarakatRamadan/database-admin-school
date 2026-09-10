@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الرئيسية | Database Admin School</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -46,7 +48,7 @@
   header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
   nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
   .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:8px;}
-  .brand .db-mark{color:var(--cyan); font-family:'Cairo',monospace;}
+  .brand img{height:40px; width:auto; display:block;}
   .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
   .nav-links > a:hover{color:var(--text);}
   .nav-links > a.active{color:var(--text);}
@@ -197,19 +199,52 @@
   .path-group-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
   .path-group-head h3{font-size:19px;}
   .path-count{font-size:12px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 12px; border-radius:20px;}
-  .path-list{list-style:none; counter-reset:lesson;}
-  .path-list li{
-    counter-increment:lesson; display:flex; align-items:center; gap:14px;
-    padding:13px 6px; border-bottom:1px solid rgba(255,255,255,.05); font-size:14.5px;
-  }
-  .path-list li:last-child{border-bottom:none;}
-  .path-list li::before{
-    content:counter(lesson); flex-shrink:0; width:26px; height:26px; border-radius:8px;
-    background:linear-gradient(135deg, rgba(155,93,229,.25), rgba(241,91,181,.2));
-    display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--cyan); font-weight:700;
-  }
-  .path-list li span{flex:1;}
-  .soon-tag{font-size:11px; color:var(--muted); border:1px solid var(--border); padding:3px 10px; border-radius:20px; white-space:nowrap;}
+  .mistake-box{background:rgba(241,91,181,.06); border:1px solid rgba(241,91,181,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .mistake-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--pink);}
+  .engine-box{background:var(--bg-elev-2); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .engine-box h4{font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:8px; color:var(--purple);}
+  .engine-box table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .engine-box td{padding:8px 6px; border-bottom:1px solid rgba(255,255,255,.06); color:var(--muted);}
+  .engine-box td:first-child{color:var(--text); font-weight:600; width:32%;}
+  .practice-box{background:rgba(34,211,238,.06); border:1px solid rgba(34,211,238,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .practice-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--cyan);}
+
+  /* Lightweight video card (thumbnail only, links out to YouTube — no iframe/no heavy embed) */
+  .video-card{position:relative; display:flex; align-items:center; gap:16px; background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:14px; margin:18px 0; transition:border-color .2s ease, transform .2s ease;}
+  .video-card:hover{border-color:var(--purple); transform:translateY(-2px);}
+  .video-thumb{width:120px; height:76px; border-radius:10px; background:linear-gradient(135deg, rgba(155,93,229,.35), rgba(241,91,181,.3)); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; overflow:hidden;}
+  .video-thumb img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
+  .video-thumb .play-btn{width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:1;}
+  .video-thumb .play-btn svg{width:13px; height:13px; color:#fff;}
+  .video-card-info{flex:1;}
+  .video-card-info h5{font-size:14px; margin-bottom:4px; font-family:'Tajawal',sans-serif;}
+  .video-card-info span{font-size:12px; color:var(--muted);}
+
+  /* Lesson shell with sidebar */
+  .lesson-shell{display:grid; grid-template-columns:270px 1fr; gap:36px; align-items:start; margin:50px 0;}
+  .lesson-sidebar{position:sticky; top:90px; background:var(--bg-elev); border:1px solid var(--border); border-radius:16px; padding:20px; max-height:calc(100vh - 120px); overflow-y:auto;}
+  .lesson-sidebar h5{font-size:13px; color:var(--text); margin-bottom:10px; font-family:'Tajawal',sans-serif;}
+  .progress-track{height:6px; background:var(--bg-elev-2); border-radius:10px; overflow:hidden; margin-bottom:6px;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--purple),var(--pink)); border-radius:10px;}
+  .progress-label{font-size:11.5px; color:var(--muted); margin-bottom:18px;}
+  .sidebar-group{margin-bottom:14px;}
+  .sidebar-group-title{font-size:11px; color:var(--cyan); margin-bottom:6px; padding:0 6px;}
+  .sidebar-link{display:flex; align-items:center; gap:10px; padding:8px 9px; border-radius:8px; font-size:12.5px; color:var(--muted); line-height:1.4;}
+  .sidebar-link .num{width:20px; height:20px; border-radius:6px; background:var(--bg-elev-2); display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; color:var(--muted);}
+  .sidebar-link.active{background:rgba(155,93,229,.14); color:var(--text); border-right:2px solid var(--purple);}
+  .sidebar-link.active .num{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff;}
+  .sidebar-link.locked{opacity:.45;}
+  @media (max-width:960px){.lesson-shell{grid-template-columns:1fr;} .lesson-sidebar{position:static; max-height:none;}}
+
+  /* Numbered lesson cards */
+  .lesson-card{position:relative; overflow:hidden;}
+  .lesson-card .big-num{position:absolute; top:-14px; left:16px; font-size:60px; font-weight:900; color:rgba(155,93,229,.10); font-family:'Tajawal',sans-serif; line-height:1; z-index:0;}
+  .lesson-card > *{position:relative; z-index:1;}
+  .lesson-card .lesson-top{display:flex; justify-content:flex-end; margin-bottom:30px;}
+  .lesson-card h4{font-size:15px; margin-bottom:10px; line-height:1.5; font-family:'Tajawal',sans-serif;}
+  .lesson-card .lesson-foot{display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:11.5px; color:var(--muted); border-top:1px solid rgba(255,255,255,.06); padding-top:12px;}
+  .lesson-card .lesson-foot .arrow{color:var(--cyan); display:flex; align-items:center; gap:4px;}
+  .lesson-card .lesson-foot .arrow svg{width:13px; height:13px;}
 
   footer{border-top:1px solid var(--border); padding:50px 0 30px; margin-top:60px;}
   .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:34px;}
@@ -251,7 +286,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+      <div class="brand"><img src="logo.png" alt="Database School"></div>
       <div class="nav-links">
         <a href="index.html" class="active">الرئيسية</a>
         <div class="nav-item">
@@ -460,7 +495,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="brand" style="margin-bottom:14px;"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"></div>
         <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
       </div>
       <div>
