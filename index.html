@@ -185,6 +185,32 @@
   .prose li{margin-bottom:8px;}
   .callout{background:rgba(155,93,229,.08); border:1px solid var(--border); border-right:3px solid var(--purple); border-radius:10px; padding:16px 20px; margin:20px 0; font-size:14.5px; color:var(--text);}
 
+  /* SQL path / table of contents page */
+  .diff-badges{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin:28px 0 10px;}
+  .diff-badge{display:flex; align-items:center; gap:10px; background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:14px 18px; font-size:13.5px; max-width:260px;}
+  .diff-badge .icon-badge{width:38px; height:38px; margin-bottom:0; flex-shrink:0;}
+  .diff-badge .icon-badge svg{width:19px; height:19px;}
+  .diff-badge strong{display:block; font-size:14px; margin-bottom:2px;}
+  .diff-badge span{color:var(--muted);}
+
+  .path-group{background:var(--bg-elev); border:1px solid var(--border); border-radius:18px; padding:30px 32px; margin-bottom:24px; scroll-margin-top:100px;}
+  .path-group-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
+  .path-group-head h3{font-size:19px;}
+  .path-count{font-size:12px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 12px; border-radius:20px;}
+  .path-list{list-style:none; counter-reset:lesson;}
+  .path-list li{
+    counter-increment:lesson; display:flex; align-items:center; gap:14px;
+    padding:13px 6px; border-bottom:1px solid rgba(255,255,255,.05); font-size:14.5px;
+  }
+  .path-list li:last-child{border-bottom:none;}
+  .path-list li::before{
+    content:counter(lesson); flex-shrink:0; width:26px; height:26px; border-radius:8px;
+    background:linear-gradient(135deg, rgba(155,93,229,.25), rgba(241,91,181,.2));
+    display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--cyan); font-weight:700;
+  }
+  .path-list li span{flex:1;}
+  .soon-tag{font-size:11px; color:var(--muted); border:1px solid var(--border); padding:3px 10px; border-radius:20px; white-space:nowrap;}
+
   footer{border-top:1px solid var(--border); padding:50px 0 30px; margin-top:60px;}
   .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:34px;}
   footer h4{font-size:15px; margin-bottom:14px;}
@@ -231,6 +257,10 @@
         <div class="nav-item">
           <span class="nav-trigger">الكورسات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
           <div class="dropdown">
+        <div class="cat">
+          <a href="sql-path.html" class="cat-link"><span>SQL Language — المسار الكامل</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="sql-path.html">كيف تبدأ التعلم</a><a href="sql-path.html">أوامر ودوال SQL</a><a href="sql-path.html">العلاقات بين الجداول</a><a href="sql-path.html">معلومات متقدمة</a><a href="sql-path.html">بناء قواعد بيانات لمشاريع</a></div>
+        </div>
         <div class="cat">
           <a href="courses.html#database-administration" class="cat-link"><span>Database Administration</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
           <div class="submenu"><a href="courses.html#database-administration">SQL Server Database Administrator</a><a href="courses.html#database-administration">PostgreSQL Database Administration</a><a href="courses.html#database-administration">MySQL & Oracle Administration</a></div>
