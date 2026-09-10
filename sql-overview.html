@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظرة عامة على SQL | Database Admin School</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:#0c0817;
+    --bg-elev:#150f28;
+    --bg-elev-2:#1c1436;
+    --purple:#9b5de5;
+    --pink:#f15bb5;
+    --cyan:#22d3ee;
+    --text:#f3eefb;
+    --muted:#a99fc4;
+    --border:rgba(155,93,229,.22);
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Cairo', sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.brand{font-family:'Tajawal', sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  .glow-field{position:fixed; inset:0; z-index:-1; overflow:hidden;}
+  .glow{position:absolute; border-radius:50%; filter:blur(90px); opacity:.35;}
+  .glow-a{width:520px; height:520px; background:var(--purple); top:-160px; right:-120px; animation:drift1 22s ease-in-out infinite;}
+  .glow-b{width:460px; height:460px; background:var(--pink); bottom:-140px; left:-100px; animation:drift2 26s ease-in-out infinite;}
+  .glow-c{width:360px; height:360px; background:var(--cyan); top:40%; left:50%; opacity:.18; animation:drift3 30s ease-in-out infinite;}
+  @keyframes drift1{0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,50px)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,-40px)}}
+  @keyframes drift3{0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(-45%,-55%)}}
+
+  header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:8px;}
+  .brand img{height:40px; width:auto; display:block;}
+  .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
+  .nav-links > a:hover{color:var(--text);}
+  .nav-links > a.active{color:var(--text);}
+
+  .nav-item{position:relative;}
+  .nav-trigger{display:flex; align-items:center; gap:6px; cursor:pointer; padding:8px 0;}
+  .nav-trigger svg{width:13px; height:13px; transition:transform .2s ease;}
+  .nav-item:hover .nav-trigger{color:var(--text);}
+  .nav-item:hover .nav-trigger svg{transform:rotate(180deg);}
+  .dropdown{
+    position:absolute; top:100%; right:-16px; min-width:260px;
+    background:var(--bg-elev); border:1px solid var(--border); border-radius:14px;
+    padding:10px; box-shadow:0 24px 60px -20px rgba(0,0,0,.7);
+    opacity:0; visibility:hidden; transform:translateY(6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:60;
+  }
+  .nav-item:hover .dropdown{opacity:1; visibility:visible; transform:translateY(0);}
+  .dropdown{width:270px;}
+  .cat{position:relative;}
+  .cat-link{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; border-radius:9px; font-size:14px; color:var(--text);}
+  .cat:hover > .cat-link{background:rgba(155,93,229,.14);}
+  .cat-link .chevron{width:12px; height:12px; color:var(--muted); flex-shrink:0;}
+  .submenu{
+    position:absolute; top:-8px; left:calc(100% + 10px); min-width:250px;
+    background:var(--bg-elev); border:1px solid var(--border); border-radius:14px;
+    padding:8px; box-shadow:0 24px 60px -20px rgba(0,0,0,.7);
+    opacity:0; visibility:hidden; transform:translateX(8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .cat:hover .submenu{opacity:1; visibility:visible; transform:translateX(0);}
+  .submenu a{display:block; padding:10px 14px; border-radius:9px; font-size:13.5px; color:var(--muted);}
+  .submenu a:hover{background:rgba(155,93,229,.1); color:var(--text);}
+
+  .nav-cta{background:linear-gradient(135deg,var(--purple),var(--pink)); padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; color:#fff; white-space:nowrap;}
+
+  .page-head{padding:64px 0 20px; text-align:center;}
+  .page-head h1{font-size:36px; font-weight:900; margin-bottom:14px;}
+  .page-head h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .page-head p{color:var(--muted); font-size:16px; max-width:620px; margin:0 auto;}
+
+  .hero{padding:90px 0 60px; text-align:center; position:relative;}
+  .hero-avatar{
+    position:absolute; top:30px; width:120px; text-align:center;
+    opacity:0; transform:translateY(10px);
+    animation:avatarIn .9s ease forwards, avatarFloat 4.5s ease-in-out infinite;
+    animation-delay:1s, 1.9s;
+  }
+  .hero-avatar.left{right:0;}
+  .hero-avatar.right{left:0;}
+  .hero-avatar .avatar-pic{
+    width:110px; height:110px; border-radius:50%; overflow:hidden; margin:0 auto 10px;
+    border:3px solid var(--border); box-shadow:0 12px 34px -10px rgba(155,93,229,.6);
+  }
+  .hero-avatar .avatar-pic img{width:100%; height:100%; object-fit:cover;}
+  .hero-avatar .avatar-caption{
+    font-size:12.5px; color:var(--text); background:var(--bg-elev); border:1px solid var(--border);
+    padding:6px 12px; border-radius:20px; display:inline-flex; align-items:center; gap:5px;
+  }
+  .hero-avatar .avatar-caption svg{width:12px; height:12px; color:var(--cyan); flex-shrink:0;}
+  @keyframes avatarIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes avatarFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);}}
+  @media (max-width:1100px){.hero-avatar{display:none;}}
+  .hero h1{font-size:44px; font-weight:900; line-height:1.35; max-width:820px; margin:0 auto 22px;}
+  .hero h1 .grad{background:linear-gradient(135deg,var(--purple),var(--pink) 60%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p{font-size:17px; color:var(--muted); max-width:640px; margin:0 auto 34px;}
+  .hero-actions{display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:56px;}
+
+  .btn{padding:14px 30px; border-radius:12px; font-weight:700; font-size:15px; display:inline-block; transition:transform .2s ease, box-shadow .2s ease; border:none; cursor:pointer; font-family:'Cairo',sans-serif;}
+  .btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 8px 30px -8px rgba(241,91,181,.55);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 34px -6px rgba(241,91,181,.7);}
+  .btn-ghost{border:1px solid var(--border); color:var(--text); background:rgba(255,255,255,.03);}
+  .btn-ghost:hover{border-color:var(--purple); background:rgba(155,93,229,.08);}
+
+  .terminal{max-width:520px; margin:0 auto; background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; text-align:right; font-family:'Cairo',monospace; box-shadow:0 20px 50px -20px rgba(0,0,0,.6);}
+  .terminal .dots{display:flex; gap:6px; margin-bottom:14px; justify-content:flex-start; flex-direction:row-reverse;}
+  .terminal .dots span{width:10px; height:10px; border-radius:50%; background:#453a63;}
+  .terminal .prompt{color:var(--cyan); font-size:13px; margin-bottom:12px; direction:ltr; text-align:left;}
+  .terminal table{width:100%; border-collapse:collapse; font-size:14px;}
+  .terminal td{padding:7px 0; border-bottom:1px solid rgba(255,255,255,.06); color:var(--muted);}
+  .terminal td:last-child{color:var(--text); font-weight:700; text-align:left; direction:ltr;}
+  .terminal .note{margin-top:12px; font-size:12px; color:#6f6690; direction:ltr; text-align:left;}
+
+  .contact-strip{background:linear-gradient(135deg, rgba(155,93,229,.14), rgba(241,91,181,.10)); border:1px solid var(--border); border-radius:20px; padding:34px 36px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; margin:70px 0;}
+  .contact-strip h3{font-size:22px; margin-bottom:6px;}
+  .contact-strip p{color:var(--muted); font-size:15px;}
+  .contact-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .pill{display:flex; align-items:center; gap:10px; background:var(--bg-elev-2); border:1px solid var(--border); padding:12px 18px; border-radius:12px; font-weight:600; font-size:14px; direction:ltr;}
+  .pill svg{width:20px; height:20px; flex-shrink:0;}
+  .pill.whatsapp svg{color:#25D366;}
+  .pill.email svg{color:var(--cyan);}
+  .pill:hover{border-color:var(--purple);}
+
+  section.block{margin:80px 0; scroll-margin-top:100px;}
+  .section-head{margin-bottom:34px; text-align:center;}
+  .section-head h2{font-size:28px; font-weight:900; margin-bottom:10px;}
+  .section-head p{color:var(--muted); font-size:15px; max-width:520px; margin:0 auto;}
+
+  .grid{display:grid; gap:20px;}
+  .grid-3{grid-template-columns:repeat(3, 1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+
+  .card{background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:26px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+  .card:hover{transform:translateY(-4px); border-color:var(--purple); box-shadow:0 16px 40px -18px rgba(155,93,229,.5);}
+  .icon-badge{width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; background:linear-gradient(135deg, rgba(155,93,229,.25), rgba(241,91,181,.2));}
+  .icon-badge svg{width:24px; height:24px; color:var(--cyan);}
+  .card h3{font-size:17px; margin-bottom:8px; font-family:'Tajawal',sans-serif;}
+  .card h3 .en{direction:ltr; display:inline-block; color:var(--text);}
+  .card p{color:var(--muted); font-size:14px;}
+  .card .tags{margin-top:12px; display:flex; gap:6px; flex-wrap:wrap; direction:ltr;}
+  .card .tags span{font-size:11px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 9px; border-radius:6px;}
+  .card .meta{margin-top:14px; display:flex; gap:14px; font-size:12px; color:#6f6690; direction:ltr; justify-content:flex-end;}
+  .badge-level{display:inline-block; font-size:11px; padding:3px 10px; border-radius:20px; background:rgba(155,93,229,.15); color:var(--purple); margin-bottom:12px;}
+  .badge-level.mid{background:rgba(241,91,181,.15); color:var(--pink);}
+  .badge-level.adv{background:rgba(34,211,238,.15); color:var(--cyan);}
+
+  .form-card{max-width:640px; margin:0 auto; background:var(--bg-elev); border:1px solid var(--border); border-radius:20px; padding:40px;}
+  .field{margin-bottom:20px;}
+  .field label{display:block; font-size:14px; margin-bottom:8px; color:var(--muted); font-weight:600;}
+  .field input, .field select, .field textarea{
+    width:100%; background:var(--bg-elev-2); border:1px solid var(--border); border-radius:10px;
+    padding:12px 14px; color:var(--text); font-family:'Cairo',sans-serif; font-size:14px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--purple);}
+  .field textarea{min-height:120px; resize:vertical;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .form-note{font-size:13px; color:var(--muted); margin-top:6px; padding:12px 16px; background:rgba(34,211,238,.06); border-radius:10px; border:1px solid rgba(34,211,238,.15);}
+
+  .code-block{background:#0a0614; border:1px solid var(--border); border-radius:12px; padding:20px; font-family:'Cairo',monospace; font-size:13.5px; color:#c9c1e0; direction:ltr; text-align:left; overflow-x:auto; margin:18px 0;}
+  .code-block .kw{color:var(--cyan);}
+  .code-block .cm{color:#6f6690;}
+  .prose{max-width:760px; margin:0 auto;}
+  .prose h2{font-size:22px; margin:36px 0 14px;}
+  .prose p{color:var(--muted); margin-bottom:14px; font-size:15.5px;}
+  .prose ul{margin:0 0 14px 0; padding-right:22px; color:var(--muted);}
+  .prose li{margin-bottom:8px;}
+  .callout{background:rgba(155,93,229,.08); border:1px solid var(--border); border-right:3px solid var(--purple); border-radius:10px; padding:16px 20px; margin:20px 0; font-size:14.5px; color:var(--text);}
+
+  /* SQL path / table of contents page */
+  .diff-badges{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin:28px 0 10px;}
+  .diff-badge{display:flex; align-items:center; gap:10px; background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:14px 18px; font-size:13.5px; max-width:260px;}
+  .diff-badge .icon-badge{width:38px; height:38px; margin-bottom:0; flex-shrink:0;}
+  .diff-badge .icon-badge svg{width:19px; height:19px;}
+  .diff-badge strong{display:block; font-size:14px; margin-bottom:2px;}
+  .diff-badge span{color:var(--muted);}
+
+  .path-group{background:var(--bg-elev); border:1px solid var(--border); border-radius:18px; padding:30px 32px; margin-bottom:24px; scroll-margin-top:100px;}
+  .path-group-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
+  .path-group-head h3{font-size:19px;}
+  .path-count{font-size:12px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 12px; border-radius:20px;}
+  .mistake-box{background:rgba(241,91,181,.06); border:1px solid rgba(241,91,181,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .mistake-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--pink);}
+  .engine-box{background:var(--bg-elev-2); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .engine-box h4{font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:8px; color:var(--purple);}
+  .engine-box table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .engine-box td{padding:8px 6px; border-bottom:1px solid rgba(255,255,255,.06); color:var(--muted);}
+  .engine-box td:first-child{color:var(--text); font-weight:600; width:32%;}
+  .practice-box{background:rgba(34,211,238,.06); border:1px solid rgba(34,211,238,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .practice-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--cyan);}
+
+  /* Lightweight video card (thumbnail only, links out to YouTube — no iframe/no heavy embed) */
+  .video-card{position:relative; display:flex; align-items:center; gap:16px; background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:14px; margin:18px 0; transition:border-color .2s ease, transform .2s ease;}
+  .video-card:hover{border-color:var(--purple); transform:translateY(-2px);}
+  .video-thumb{width:120px; height:76px; border-radius:10px; background:linear-gradient(135deg, rgba(155,93,229,.35), rgba(241,91,181,.3)); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; overflow:hidden;}
+  .video-thumb img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
+  .video-thumb .play-btn{width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:1;}
+  .video-thumb .play-btn svg{width:13px; height:13px; color:#fff;}
+  .video-card-info{flex:1;}
+  .video-card-info h5{font-size:14px; margin-bottom:4px; font-family:'Tajawal',sans-serif;}
+  .video-card-info span{font-size:12px; color:var(--muted);}
+
+  /* Lesson shell with sidebar */
+  .lesson-shell{display:grid; grid-template-columns:270px 1fr; gap:36px; align-items:start; margin:50px 0;}
+  .lesson-sidebar{position:sticky; top:90px; background:var(--bg-elev); border:1px solid var(--border); border-radius:16px; padding:20px; max-height:calc(100vh - 120px); overflow-y:auto;}
+  .lesson-sidebar h5{font-size:13px; color:var(--text); margin-bottom:10px; font-family:'Tajawal',sans-serif;}
+  .progress-track{height:6px; background:var(--bg-elev-2); border-radius:10px; overflow:hidden; margin-bottom:6px;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--purple),var(--pink)); border-radius:10px;}
+  .progress-label{font-size:11.5px; color:var(--muted); margin-bottom:18px;}
+  .sidebar-group{margin-bottom:14px;}
+  .sidebar-group-title{font-size:11px; color:var(--cyan); margin-bottom:6px; padding:0 6px;}
+  .sidebar-link{display:flex; align-items:center; gap:10px; padding:8px 9px; border-radius:8px; font-size:12.5px; color:var(--muted); line-height:1.4;}
+  .sidebar-link .num{width:20px; height:20px; border-radius:6px; background:var(--bg-elev-2); display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; color:var(--muted);}
+  .sidebar-link.active{background:rgba(155,93,229,.14); color:var(--text); border-right:2px solid var(--purple);}
+  .sidebar-link.active .num{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff;}
+  .sidebar-link.locked{opacity:.45;}
+  @media (max-width:960px){.lesson-shell{grid-template-columns:1fr;} .lesson-sidebar{position:static; max-height:none;}}
+
+  /* Numbered lesson cards */
+  .lesson-card{position:relative; overflow:hidden;}
+  .lesson-card .big-num{position:absolute; top:-14px; left:16px; font-size:60px; font-weight:900; color:rgba(155,93,229,.10); font-family:'Tajawal',sans-serif; line-height:1; z-index:0;}
+  .lesson-card > *{position:relative; z-index:1;}
+  .lesson-card .lesson-top{display:flex; justify-content:flex-end; margin-bottom:30px;}
+  .lesson-card h4{font-size:15px; margin-bottom:10px; line-height:1.5; font-family:'Tajawal',sans-serif;}
+  .lesson-card .lesson-foot{display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:11.5px; color:var(--muted); border-top:1px solid rgba(255,255,255,.06); padding-top:12px;}
+  .lesson-card .lesson-foot .arrow{color:var(--cyan); display:flex; align-items:center; gap:4px;}
+  .lesson-card .lesson-foot .arrow svg{width:13px; height:13px;}
+
+  footer{border-top:1px solid var(--border); padding:50px 0 30px; margin-top:60px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:34px;}
+  footer h4{font-size:15px; margin-bottom:14px;}
+  footer p{color:var(--muted); font-size:14px;}
+  footer ul{list-style:none;}
+  footer ul li{margin-bottom:9px;}
+  footer ul a{color:var(--muted); font-size:14px;}
+  footer ul a:hover{color:var(--text);}
+  .footer-bottom{text-align:center; color:#6f6690; font-size:13px; padding-top:24px; border-top:1px solid var(--border);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:26px;}
+    .hero h1{font-size:32px;}
+    .page-head h1{font-size:28px;}
+    .contact-strip{flex-direction:column; align-items:stretch; text-align:center;}
+    .contact-actions{justify-content:center;}
+    .form-card{padding:26px;}
+  }
+  @media (max-width:560px){
+    .grid-3{grid-template-columns:1fr;}
+  }
+
+
+  .lesson-badges{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+
+</style>
+</head>
+<body>
+
+<div class="glow-field">
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+</div>
+
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><img src="logo.png" alt="Database School"></div>
+      <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <div class="nav-item">
+          <span class="nav-trigger">الكورسات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+          <div class="dropdown">
+        <div class="cat">
+          <a href="sql-path.html" class="cat-link"><span>SQL Language — المسار الكامل</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="sql-path.html">كيف تبدأ التعلم</a><a href="sql-path.html">أوامر ودوال SQL</a><a href="sql-path.html">العلاقات بين الجداول</a><a href="sql-path.html">معلومات متقدمة</a><a href="sql-path.html">بناء قواعد بيانات لمشاريع</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#database-administration" class="cat-link"><span>Database Administration</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#database-administration">SQL Server Database Administrator</a><a href="courses.html#database-administration">PostgreSQL Database Administration</a><a href="courses.html#database-administration">MySQL & Oracle Administration</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#data-analysis" class="cat-link"><span>Data Analysis</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#data-analysis">Data Analysis with SQL</a><a href="courses.html#data-analysis">MongoDB for Analysts</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#data-warehousing" class="cat-link"><span>Data Warehousing</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#data-warehousing">Data Warehousing Fundamentals</a></div>
+        </div>
+        <div class="cat">
+          <a href="servers.html" class="cat-link"><span>Servers</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="servers.html">Backup & Recovery</a><a href="servers.html">Performance Tuning</a><a href="servers.html">High Availability</a></div>
+        </div>
+        <div class="cat">
+          <a href="networks.html" class="cat-link"><span>Networking</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="networks.html">Network Basics</a><a href="networks.html">Firewalls & Security</a><a href="networks.html">VPN & Remote Access</a></div>
+        </div>
+        <div class="cat">
+          <a href="cloud.html" class="cat-link"><span>Cloud</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="cloud.html">AWS</a><a href="cloud.html">Azure</a><a href="cloud.html">Google Cloud</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#virtualization" class="cat-link"><span>Virtualization</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#virtualization">VMware ESXi Administration</a><a href="courses.html#virtualization">vCenter & Clusters</a></div>
+        </div>
+        <div class="cat">
+          <a href="courses.html#backup" class="cat-link"><span>Backup & Recovery</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></a>
+          <div class="submenu"><a href="courses.html#backup">Veeam Backup & Replication</a><a href="courses.html#backup">Disaster Recovery Planning</a></div>
+        </div></div>
+        </div>
+        <a href="articles.html">المقالات</a>
+        <a href="problems.html">مشاكل وحلول</a>
+        <a href="about.html">عن الموقع</a>
+      </div>
+      <a href="submit.html" class="nav-cta">عندي مشكلة</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="lesson-shell">
+  
+    <aside class="lesson-sidebar">
+      <h5>مسار SQL الكامل</h5>
+      <div class="progress-track"><div class="progress-fill" style="width:2%"></div></div>
+      <div class="progress-label">درس 1 من 49 — 2%</div>
+      <div class="sidebar-group"><div class="sidebar-group-title">كيف تبدأ التعلم</div><a href="sql-overview.html" class="sidebar-link active"><span class="num">01</span><span>نظرة عامة على SQL</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">02</span><span>تجهيز بيئة العمل</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">03</span><span>أسلوب كتابة الأوامر</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">04</span><span>التعليقات في الاستعلامات</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">05</span><span>تحديث قائمة قواعد البيانات</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">06</span><span>كتابة أول استعلام</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">07</span><span>مفاهيم ومصطلحات أساسية</span></a></div><div class="sidebar-group"><div class="sidebar-group-title">أوامر ودوال SQL</div><a href="sql-path.html" class="sidebar-link locked"><span class="num">08</span><span>إنشاء قاعدة بيانات (CREATE DATABASE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">09</span><span>حذف قاعدة بيانات (DROP DATABASE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">10</span><span>أهم أنواع البيانات (Data Types)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">11</span><span>إنشاء جدول (CREATE TABLE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">12</span><span>حذف جدول (DROP TABLE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">13</span><span>تحديد قاعدة البيانات المستخدمة (USE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">14</span><span>إضافة سطر جديد (INSERT INTO)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">15</span><span>الترقيم التلقائي للأسطر (AUTO_INCREMENT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">16</span><span>جلب البيانات (SELECT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">17</span><span>دمج الأعمدة عند الجلب (CONCAT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">18</span><span>تكرار اسم الأعمدة في الاستعلام</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">19</span><span>جلب البيانات بشروط (WHERE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">20</span><span>ترتيب نتائج الاستعلام (ORDER BY)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">21</span><span>إزالة التكرار من النتائج (DISTINCT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">22</span><span>دمج نتائج جداول متعددة (UNION)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">23</span><span>حذف بيانات من الجدول (DELETE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">24</span><span>تحديث بيانات موجودة (UPDATE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">25</span><span>تحديد عدد النتائج (LIMIT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">26</span><span>التعامل مع القيم الفارغة (NULL)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">27</span><span>الدوال التجميعية (Aggregate Functions)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">28</span><span>تجميع النتائج المشتركة (GROUP BY)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">29</span><span>الشروط على المجموعات (HAVING)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">30</span><span>نسخ بيانات بين الجداول (INSERT INTO SELECT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">31</span><span>قيم شرطية بديلة (CASE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">32</span><span>فرض تفرد القيم (UNIQUE)</span></a></div><div class="sidebar-group"><div class="sidebar-group-title">العلاقات بين الجداول</div><a href="sql-path.html" class="sidebar-link locked"><span class="num">33</span><span>كيف تُربط الجداول ببعضها</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">34</span><span>أنواع العلاقات بين الجداول</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">35</span><span>طرق دمج بيانات الجداول (JOINs)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">36</span><span>أسماء مختصرة للجداول (Alias)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">37</span><span>ربط بيانات داخل نفس الجدول (Self Join)</span></a></div><div class="sidebar-group"><div class="sidebar-group-title">معلومات متقدمة</div><a href="sql-path.html" class="sidebar-link locked"><span class="num">38</span><span>تعديل بنية جدول موجود (ALTER)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">39</span><span>قيم افتراضية للحقول (DEFAULT)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">40</span><span>تحديد المفتاح الرئيسي (PRIMARY KEY)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">41</span><span>تحديد المفتاح الأجنبي (FOREIGN KEY)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">42</span><span>شروط صحة القيم (CHECK)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">43</span><span>تنفيذ أو إلغاء مجموعة أوامر معًا (Transactions)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">44</span><span>الفهارس وأنواعها (Indexes)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">45</span><span>البحث النصي التقريبي (LIKE)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">46</span><span>الاستعلامات المتداخلة (Subqueries)</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">47</span><span>الاتصال بقاعدة بيانات عن بعد (Remote Connection)</span></a></div><div class="sidebar-group"><div class="sidebar-group-title">بناء قواعد بيانات لمشاريع حقيقية</div><a href="sql-path.html" class="sidebar-link locked"><span class="num">48</span><span>تصميم قاعدة بيانات من الصفر</span></a><a href="sql-path.html" class="sidebar-link locked"><span class="num">49</span><span>العمل على قواعد بيانات جاهزة (Sample Databases)</span></a></div>
+    </aside>
+
+  <article>
+    <span class="badge-level beg">مبتدئ — كيف تبدأ التعلم</span>
+    <h1 style="font-size:30px; margin:14px 0 20px;">نظرة عامة على <span class="grad">SQL</span></h1>
+
+    
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: كيف تبدأ التعلم</h5><span>يغطي أول 7 دروس من المسار — هيتضاف رابط اليوتيوب قريبًا</span></div>
+    </a>
+
+    <div class="prose" style="max-width:none;">
+      <p>SQL (اختصار Structured Query Language) هي اللغة اللي بتتكلم بيها مع أي قاعدة بيانات علائقية — سواء عايز تجيب بيانات، تضيف، تعدّل، أو تحذف. مش لغة برمجة بالمعنى التقليدي زي Python أو Java؛ SQL لغة <strong style="color:var(--text)">تصريحية (Declarative)</strong> — يعني انت بتقول لقاعدة البيانات "عايز إيه" مش "إزاي توصله".</p>
+
+      <p>ليه SQL بالذات مهمة جدًا في مسارك؟ لأنها القاسم المشترك بين كل محركات قواعد البيانات تقريبًا — سواء بتشتغل على SQL Server، PostgreSQL، MySQL، أو Oracle، أنت هتكتب استعلامات SQL في كل الحالات دي، مع فروق بسيطة هنوضحها أول بأول.</p>
+
+      <div class="engine-box">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 8l10 6 10-6-10-6Z"/><path d="M2 14l10 6 10-6"/><path d="M2 11l10 6 10-6"/></svg> SQL المعياري و"لهجات" المحركات</h4>
+        <p style="color:var(--muted); font-size:13.5px; margin-bottom:12px;">فيه معيار عام اسمه ANSI SQL، لكن كل محرك بيضيف عليه امتدادات خاصة بيه:</p>
+        <table>
+          <tr><td>SQL Server</td><td>T-SQL — امتدادات زي TOP, IDENTITY</td></tr>
+          <tr><td>PostgreSQL</td><td>أقرب محرك للمعيار، بيدعم ميزات متقدمة زي JSONB</td></tr>
+          <tr><td>MySQL</td><td>بسيط وسريع، بعض الاختلافات في التعامل مع الـ Strings</td></tr>
+          <tr><td>Oracle</td><td>PL/SQL — لغة إجرائية كاملة فوق SQL الأساسية</td></tr>
+        </table>
+      </div>
+
+      <h2>مفهوم غلط شائع عند المبتدئين</h2>
+      <div class="mistake-box">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg> "SQL لازم أتعلمها زي أي لغة برمجة، خطوة بخطوة بالترتيب"</h4>
+        <p style="color:var(--muted); font-size:14px;">الحقيقة إن SQL أبسط بكتير من كده — مش محتاج تفهم Loops أو Functions معقدة عشان تبدأ. أول استعلام مفيد ممكن تكتبه في أول 10 دقايق من التعلم. المشكلة اللي بتحصل فعلاً إن ناس كتير بتحاول تحفظ الأوامر من غير ما تجرّبها على بيانات حقيقية، فتنساها بسرعة.</p>
+      </div>
+
+      <h2>الأدوات اللي هتحتاجها</h2>
+      <p>مش محتاج تثبّت حاجة معقدة عشان تبدأ. في الدرس الجاي ("تجهيز بيئة العمل") هنوريك إزاي تشغّل أول قاعدة بيانات بتاعتك في أقل من 10 دقايق.</p>
+
+      <div class="practice-box">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12l6 6L20 6"/></svg> تمرين سريع</h4>
+        <p style="color:var(--text); font-size:14px; margin-bottom:0;">قبل ما تكمل للدرس الجاي، جاوب على نفسك: لو عندك جدول اسمه <code style="direction:ltr; display:inline-block;">employees</code> وعايز تعرف أسماء كل الموظفين بس، هل الأمر ده "أمر تصريحي" (بتقول عايز إيه) ولا "أمر إجرائي" (بتقول إزاي توصله)؟ الإجابة هتفهمها أكتر في درس "كتابة أول استعلام".</p>
+      </div>
+
+      <div class="callout">الخلاصة: SQL لغة واحدة، لكن معاها "لهجات" مختلفة بحسب المحرك. احنا في المسار ده هنعلّمك SQL بشكل يخليك قادر تشتغل على أي محرك منهم براحتك.</div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:40px; padding-top:24px; border-top:1px solid var(--border);">
+      <a href="sql-path.html" class="btn btn-ghost">↩ رجوع لخريطة المسار</a>
+      <a href="sql-path.html" class="btn btn-primary">الدرس الجاي: تجهيز بيئة العمل ←</a>
+    </div>
+  </article>
+</div>
+
+
+  <div class="contact-strip">
+    <div>
+      <h3>تاسكاية جامعية، مشروع تخرج، أو مشكلة سيرفر محتاجة حل سريع؟</h3>
+      <p>ابعتلي التفاصيل مباشرة وهرد عليك بسرعة.</p>
+    </div>
+    <div class="contact-actions">
+      <a class="pill whatsapp" href="https://wa.me/201016406481" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.93 1.35-.5.05-1.02.24-3.44-.72-2.9-1.16-4.77-4.1-4.92-4.29-.14-.19-1.17-1.56-1.17-2.98s.73-2.11 1-2.4c.24-.28.53-.35.7-.35.18 0 .35 0 .5.01.16.01.38-.06.6.45.24.55.8 1.9.87 2.04.07.14.12.31.02.5-.1.19-.15.31-.3.48-.14.17-.3.38-.43.5-.14.14-.29.29-.13.57.17.28.74 1.22 1.6 1.98 1.1.98 2.03 1.28 2.31 1.42.28.14.44.12.6-.07.17-.19.7-.81.89-1.09.19-.28.38-.23.63-.14.26.1 1.6.76 1.88.9.28.14.46.21.53.33.07.12.07.68-.17 1.36Z"/></svg>
+        01016406481
+      </a>
+      <a class="pill email" href="mailto:barakatramadan394@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><path d="M3 6h18v12H3z"/></svg>
+        barakatramadan394@gmail.com
+      </a>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"></div>
+        <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
+      </div>
+      <div>
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="helpdesk.html">Technical Support & Help Desk</a></li>
+          <li><a href="about.html">عن الموقع</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>تواصل</h4>
+        <ul>
+          <li><a href="https://wa.me/201016406481">01016406481</a></li>
+          <li><a href="mailto:barakatramadan394@gmail.com">barakatramadan394@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Database Admin School — كل الحقوق محفوظة</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مسار SQL الكامل | Database Admin School</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&family=Cairo:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -46,7 +48,7 @@
   header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
   nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
   .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:8px;}
-  .brand .db-mark{color:var(--cyan); font-family:'Cairo',monospace;}
+  .brand img{height:40px; width:auto; display:block;}
   .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
   .nav-links > a:hover{color:var(--text);}
   .nav-links > a.active{color:var(--text);}
@@ -197,19 +199,52 @@
   .path-group-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;}
   .path-group-head h3{font-size:19px;}
   .path-count{font-size:12px; color:var(--cyan); background:rgba(34,211,238,.1); padding:4px 12px; border-radius:20px;}
-  .path-list{list-style:none; counter-reset:lesson;}
-  .path-list li{
-    counter-increment:lesson; display:flex; align-items:center; gap:14px;
-    padding:13px 6px; border-bottom:1px solid rgba(255,255,255,.05); font-size:14.5px;
-  }
-  .path-list li:last-child{border-bottom:none;}
-  .path-list li::before{
-    content:counter(lesson); flex-shrink:0; width:26px; height:26px; border-radius:8px;
-    background:linear-gradient(135deg, rgba(155,93,229,.25), rgba(241,91,181,.2));
-    display:flex; align-items:center; justify-content:center; font-size:12px; color:var(--cyan); font-weight:700;
-  }
-  .path-list li span{flex:1;}
-  .soon-tag{font-size:11px; color:var(--muted); border:1px solid var(--border); padding:3px 10px; border-radius:20px; white-space:nowrap;}
+  .mistake-box{background:rgba(241,91,181,.06); border:1px solid rgba(241,91,181,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .mistake-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--pink);}
+  .engine-box{background:var(--bg-elev-2); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .engine-box h4{font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:8px; color:var(--purple);}
+  .engine-box table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .engine-box td{padding:8px 6px; border-bottom:1px solid rgba(255,255,255,.06); color:var(--muted);}
+  .engine-box td:first-child{color:var(--text); font-weight:600; width:32%;}
+  .practice-box{background:rgba(34,211,238,.06); border:1px solid rgba(34,211,238,.25); border-radius:12px; padding:18px 20px; margin:18px 0;}
+  .practice-box h4{font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:8px; color:var(--cyan);}
+
+  /* Lightweight video card (thumbnail only, links out to YouTube — no iframe/no heavy embed) */
+  .video-card{position:relative; display:flex; align-items:center; gap:16px; background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:14px; margin:18px 0; transition:border-color .2s ease, transform .2s ease;}
+  .video-card:hover{border-color:var(--purple); transform:translateY(-2px);}
+  .video-thumb{width:120px; height:76px; border-radius:10px; background:linear-gradient(135deg, rgba(155,93,229,.35), rgba(241,91,181,.3)); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; overflow:hidden;}
+  .video-thumb img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
+  .video-thumb .play-btn{width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:1;}
+  .video-thumb .play-btn svg{width:13px; height:13px; color:#fff;}
+  .video-card-info{flex:1;}
+  .video-card-info h5{font-size:14px; margin-bottom:4px; font-family:'Tajawal',sans-serif;}
+  .video-card-info span{font-size:12px; color:var(--muted);}
+
+  /* Lesson shell with sidebar */
+  .lesson-shell{display:grid; grid-template-columns:270px 1fr; gap:36px; align-items:start; margin:50px 0;}
+  .lesson-sidebar{position:sticky; top:90px; background:var(--bg-elev); border:1px solid var(--border); border-radius:16px; padding:20px; max-height:calc(100vh - 120px); overflow-y:auto;}
+  .lesson-sidebar h5{font-size:13px; color:var(--text); margin-bottom:10px; font-family:'Tajawal',sans-serif;}
+  .progress-track{height:6px; background:var(--bg-elev-2); border-radius:10px; overflow:hidden; margin-bottom:6px;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--purple),var(--pink)); border-radius:10px;}
+  .progress-label{font-size:11.5px; color:var(--muted); margin-bottom:18px;}
+  .sidebar-group{margin-bottom:14px;}
+  .sidebar-group-title{font-size:11px; color:var(--cyan); margin-bottom:6px; padding:0 6px;}
+  .sidebar-link{display:flex; align-items:center; gap:10px; padding:8px 9px; border-radius:8px; font-size:12.5px; color:var(--muted); line-height:1.4;}
+  .sidebar-link .num{width:20px; height:20px; border-radius:6px; background:var(--bg-elev-2); display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; color:var(--muted);}
+  .sidebar-link.active{background:rgba(155,93,229,.14); color:var(--text); border-right:2px solid var(--purple);}
+  .sidebar-link.active .num{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff;}
+  .sidebar-link.locked{opacity:.45;}
+  @media (max-width:960px){.lesson-shell{grid-template-columns:1fr;} .lesson-sidebar{position:static; max-height:none;}}
+
+  /* Numbered lesson cards */
+  .lesson-card{position:relative; overflow:hidden;}
+  .lesson-card .big-num{position:absolute; top:-14px; left:16px; font-size:60px; font-weight:900; color:rgba(155,93,229,.10); font-family:'Tajawal',sans-serif; line-height:1; z-index:0;}
+  .lesson-card > *{position:relative; z-index:1;}
+  .lesson-card .lesson-top{display:flex; justify-content:flex-end; margin-bottom:30px;}
+  .lesson-card h4{font-size:15px; margin-bottom:10px; line-height:1.5; font-family:'Tajawal',sans-serif;}
+  .lesson-card .lesson-foot{display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:11.5px; color:var(--muted); border-top:1px solid rgba(255,255,255,.06); padding-top:12px;}
+  .lesson-card .lesson-foot .arrow{color:var(--cyan); display:flex; align-items:center; gap:4px;}
+  .lesson-card .lesson-foot .arrow svg{width:13px; height:13px;}
 
   footer{border-top:1px solid var(--border); padding:50px 0 30px; margin-top:60px;}
   .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:34px;}
@@ -251,7 +286,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+      <div class="brand"><img src="logo.png" alt="Database School"></div>
       <div class="nav-links">
         <a href="index.html">الرئيسية</a>
         <div class="nav-item">
@@ -332,35 +367,354 @@
         <h3>كيف تبدأ التعلم</h3>
         <span class="path-count">7 دروس</span>
       </div>
-      <ul class="path-list"><li><span>نظرة عامة على SQL</span><span class="soon-tag">قريبًا</span></li><li><span>تجهيز بيئة العمل</span><span class="soon-tag">قريبًا</span></li><li><span>أسلوب كتابة الأوامر</span><span class="soon-tag">قريبًا</span></li><li><span>التعليقات في الاستعلامات</span><span class="soon-tag">قريبًا</span></li><li><span>تحديث قائمة قواعد البيانات</span><span class="soon-tag">قريبًا</span></li><li><span>كتابة أول استعلام</span><span class="soon-tag">قريبًا</span></li><li><span>مفاهيم ومصطلحات أساسية</span><span class="soon-tag">قريبًا</span></li></ul>
+      
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: كيف تبدأ التعلم</h5><span>يغطي 7 دروس من هذا القسم — هيتضاف الرابط قريبًا</span></div>
+    </a>
+      <div class="grid grid-3">
+      <a href="sql-overview.html" class="card lesson-card">
+        <span class="big-num">01</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>نظرة عامة على SQL</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span class="arrow">ابدأ الدرس <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">02</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تجهيز بيئة العمل</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">03</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>أسلوب كتابة الأوامر</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">04</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>التعليقات في الاستعلامات</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">05</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تحديث قائمة قواعد البيانات</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">06</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>كتابة أول استعلام</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">07</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>مفاهيم ومصطلحات أساسية</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a></div>
     </div>
     <div class="path-group block" id="commands">
       <div class="path-group-head">
         <h3>أوامر ودوال SQL</h3>
         <span class="path-count">25 دروس</span>
       </div>
-      <ul class="path-list"><li><span>إنشاء قاعدة بيانات (CREATE DATABASE)</span><span class="soon-tag">قريبًا</span></li><li><span>حذف قاعدة بيانات (DROP DATABASE)</span><span class="soon-tag">قريبًا</span></li><li><span>أهم أنواع البيانات (Data Types)</span><span class="soon-tag">قريبًا</span></li><li><span>إنشاء جدول (CREATE TABLE)</span><span class="soon-tag">قريبًا</span></li><li><span>حذف جدول (DROP TABLE)</span><span class="soon-tag">قريبًا</span></li><li><span>تحديد قاعدة البيانات المستخدمة (USE)</span><span class="soon-tag">قريبًا</span></li><li><span>إضافة سطر جديد (INSERT INTO)</span><span class="soon-tag">قريبًا</span></li><li><span>الترقيم التلقائي للأسطر (AUTO_INCREMENT)</span><span class="soon-tag">قريبًا</span></li><li><span>جلب البيانات (SELECT)</span><span class="soon-tag">قريبًا</span></li><li><span>دمج الأعمدة عند الجلب (CONCAT)</span><span class="soon-tag">قريبًا</span></li><li><span>تكرار اسم الأعمدة في الاستعلام</span><span class="soon-tag">قريبًا</span></li><li><span>جلب البيانات بشروط (WHERE)</span><span class="soon-tag">قريبًا</span></li><li><span>ترتيب نتائج الاستعلام (ORDER BY)</span><span class="soon-tag">قريبًا</span></li><li><span>إزالة التكرار من النتائج (DISTINCT)</span><span class="soon-tag">قريبًا</span></li><li><span>دمج نتائج جداول متعددة (UNION)</span><span class="soon-tag">قريبًا</span></li><li><span>حذف بيانات من الجدول (DELETE)</span><span class="soon-tag">قريبًا</span></li><li><span>تحديث بيانات موجودة (UPDATE)</span><span class="soon-tag">قريبًا</span></li><li><span>تحديد عدد النتائج (LIMIT)</span><span class="soon-tag">قريبًا</span></li><li><span>التعامل مع القيم الفارغة (NULL)</span><span class="soon-tag">قريبًا</span></li><li><span>الدوال التجميعية (Aggregate Functions)</span><span class="soon-tag">قريبًا</span></li><li><span>تجميع النتائج المشتركة (GROUP BY)</span><span class="soon-tag">قريبًا</span></li><li><span>الشروط على المجموعات (HAVING)</span><span class="soon-tag">قريبًا</span></li><li><span>نسخ بيانات بين الجداول (INSERT INTO SELECT)</span><span class="soon-tag">قريبًا</span></li><li><span>قيم شرطية بديلة (CASE)</span><span class="soon-tag">قريبًا</span></li><li><span>فرض تفرد القيم (UNIQUE)</span><span class="soon-tag">قريبًا</span></li></ul>
+      
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: أوامر ودوال SQL</h5><span>يغطي 25 دروس من هذا القسم — هيتضاف الرابط قريبًا</span></div>
+    </a>
+      <div class="grid grid-3">
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">08</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>إنشاء قاعدة بيانات (CREATE DATABASE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">09</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>حذف قاعدة بيانات (DROP DATABASE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">10</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>أهم أنواع البيانات (Data Types)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">11</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>إنشاء جدول (CREATE TABLE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">12</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>حذف جدول (DROP TABLE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">13</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تحديد قاعدة البيانات المستخدمة (USE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">14</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>إضافة سطر جديد (INSERT INTO)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">15</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>الترقيم التلقائي للأسطر (AUTO_INCREMENT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">16</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>جلب البيانات (SELECT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">17</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>دمج الأعمدة عند الجلب (CONCAT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">18</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تكرار اسم الأعمدة في الاستعلام</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">19</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>جلب البيانات بشروط (WHERE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">20</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>ترتيب نتائج الاستعلام (ORDER BY)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">21</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>إزالة التكرار من النتائج (DISTINCT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">22</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>دمج نتائج جداول متعددة (UNION)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">23</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>حذف بيانات من الجدول (DELETE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">24</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تحديث بيانات موجودة (UPDATE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">25</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تحديد عدد النتائج (LIMIT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">26</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>التعامل مع القيم الفارغة (NULL)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">27</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>الدوال التجميعية (Aggregate Functions)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">28</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>تجميع النتائج المشتركة (GROUP BY)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">29</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>الشروط على المجموعات (HAVING)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">30</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>نسخ بيانات بين الجداول (INSERT INTO SELECT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">31</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>قيم شرطية بديلة (CASE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">32</span>
+        <div class="lesson-top"><span class="badge-level beg">مبتدئ</span></div>
+        <h4>فرض تفرد القيم (UNIQUE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a></div>
     </div>
     <div class="path-group block" id="relations">
       <div class="path-group-head">
         <h3>العلاقات بين الجداول</h3>
         <span class="path-count">5 دروس</span>
       </div>
-      <ul class="path-list"><li><span>كيف تُربط الجداول ببعضها</span><span class="soon-tag">قريبًا</span></li><li><span>أنواع العلاقات بين الجداول</span><span class="soon-tag">قريبًا</span></li><li><span>طرق دمج بيانات الجداول (JOINs)</span><span class="soon-tag">قريبًا</span></li><li><span>أسماء مختصرة للجداول (Alias)</span><span class="soon-tag">قريبًا</span></li><li><span>ربط بيانات داخل نفس الجدول (Self Join)</span><span class="soon-tag">قريبًا</span></li></ul>
+      
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: العلاقات بين الجداول</h5><span>يغطي 5 دروس من هذا القسم — هيتضاف الرابط قريبًا</span></div>
+    </a>
+      <div class="grid grid-3">
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">33</span>
+        <div class="lesson-top"><span class="badge-level mid">متوسط</span></div>
+        <h4>كيف تُربط الجداول ببعضها</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">34</span>
+        <div class="lesson-top"><span class="badge-level mid">متوسط</span></div>
+        <h4>أنواع العلاقات بين الجداول</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">35</span>
+        <div class="lesson-top"><span class="badge-level mid">متوسط</span></div>
+        <h4>طرق دمج بيانات الجداول (JOINs)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">36</span>
+        <div class="lesson-top"><span class="badge-level mid">متوسط</span></div>
+        <h4>أسماء مختصرة للجداول (Alias)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">37</span>
+        <div class="lesson-top"><span class="badge-level mid">متوسط</span></div>
+        <h4>ربط بيانات داخل نفس الجدول (Self Join)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a></div>
     </div>
     <div class="path-group block" id="advanced">
       <div class="path-group-head">
         <h3>معلومات متقدمة</h3>
         <span class="path-count">10 دروس</span>
       </div>
-      <ul class="path-list"><li><span>تعديل بنية جدول موجود (ALTER)</span><span class="soon-tag">قريبًا</span></li><li><span>قيم افتراضية للحقول (DEFAULT)</span><span class="soon-tag">قريبًا</span></li><li><span>تحديد المفتاح الرئيسي (PRIMARY KEY)</span><span class="soon-tag">قريبًا</span></li><li><span>تحديد المفتاح الأجنبي (FOREIGN KEY)</span><span class="soon-tag">قريبًا</span></li><li><span>شروط صحة القيم (CHECK)</span><span class="soon-tag">قريبًا</span></li><li><span>تنفيذ أو إلغاء مجموعة أوامر معًا (Transactions)</span><span class="soon-tag">قريبًا</span></li><li><span>الفهارس وأنواعها (Indexes)</span><span class="soon-tag">قريبًا</span></li><li><span>البحث النصي التقريبي (LIKE)</span><span class="soon-tag">قريبًا</span></li><li><span>الاستعلامات المتداخلة (Subqueries)</span><span class="soon-tag">قريبًا</span></li><li><span>الاتصال بقاعدة بيانات عن بعد (Remote Connection)</span><span class="soon-tag">قريبًا</span></li></ul>
+      
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: معلومات متقدمة</h5><span>يغطي 10 دروس من هذا القسم — هيتضاف الرابط قريبًا</span></div>
+    </a>
+      <div class="grid grid-3">
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">38</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>تعديل بنية جدول موجود (ALTER)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">39</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>قيم افتراضية للحقول (DEFAULT)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">40</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>تحديد المفتاح الرئيسي (PRIMARY KEY)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">41</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>تحديد المفتاح الأجنبي (FOREIGN KEY)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">42</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>شروط صحة القيم (CHECK)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">43</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>تنفيذ أو إلغاء مجموعة أوامر معًا (Transactions)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">44</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>الفهارس وأنواعها (Indexes)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">45</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>البحث النصي التقريبي (LIKE)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">46</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>الاستعلامات المتداخلة (Subqueries)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">47</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>الاتصال بقاعدة بيانات عن بعد (Remote Connection)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a></div>
     </div>
     <div class="path-group block" id="projects">
       <div class="path-group-head">
         <h3>بناء قواعد بيانات لمشاريع حقيقية</h3>
         <span class="path-count">2 دروس</span>
       </div>
-      <ul class="path-list"><li><span>تصميم قاعدة بيانات من الصفر</span><span class="soon-tag">قريبًا</span></li><li><span>العمل على قواعد بيانات جاهزة (Sample Databases)</span><span class="soon-tag">قريبًا</span></li></ul>
+      
+    <a href="#" class="video-card">
+      <div class="video-thumb"><span class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></div>
+      <div class="video-card-info"><h5>فيديو شرح: بناء قواعد بيانات لمشاريع حقيقية</h5><span>يغطي 2 دروس من هذا القسم — هيتضاف الرابط قريبًا</span></div>
+    </a>
+      <div class="grid grid-3">
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">48</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>تصميم قاعدة بيانات من الصفر</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a>
+      <a href="sql-path.html" class="card lesson-card">
+        <span class="big-num">49</span>
+        <div class="lesson-top"><span class="badge-level adv">متقدم</span></div>
+        <h4>العمل على قواعد بيانات جاهزة (Sample Databases)</h4>
+        <div class="lesson-foot"><span>5 دقائق تقريبًا</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> قريبًا</span></div>
+      </a></div>
     </div>
 </section>
 
@@ -389,7 +743,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="brand" style="margin-bottom:14px;"><span class="db-mark">&lt;db&gt;</span> Database Admin School</div>
+        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"></div>
         <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
       </div>
       <div>
