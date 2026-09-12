@@ -22,6 +22,18 @@
     --border:rgba(155,93,229,.22);
     --radius:16px;
   }
+  :root[data-theme="light"]{
+    --bg:#f3f0fb;
+    --bg-elev:#ffffff;
+    --bg-elev-2:#f1ecfb;
+    --text:#1c1330;
+    --muted:#6a6084;
+    --border:rgba(120,80,190,.18);
+  }
+  :root[data-theme="light"] .glow{opacity:.18;}
+  :root[data-theme="light"] header{background:rgba(255,255,255,.75);}
+  :root[data-theme="light"] .terminal .note,
+  :root[data-theme="light"] .footer-bottom{color:#8a80a6;}
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -47,13 +59,19 @@
 
   header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(12,8,23,.75); border-bottom:1px solid var(--border);}
   nav{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
-  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:11px;}
-  .brand img{height:42px; width:auto; display:block; filter:drop-shadow(0 6px 16px rgba(155,93,229,.55));}
-  .brand-text{display:flex; flex-direction:column; line-height:1.15;}
-  .brand-text .name{background:linear-gradient(135deg,var(--purple),var(--pink) 65%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:19px; font-weight:900; direction:ltr;}
-  .brand-text .tagline{font-size:10px; font-weight:600; letter-spacing:.14em; color:var(--muted); direction:ltr;}
-  footer .brand img{height:36px;}
+  .brand{font-size:20px; font-weight:900; display:flex; align-items:center; gap:11px; min-width:0;}
+  .brand img{height:44px; width:44px; flex:none; display:block;}
+  .brand-text{display:flex; flex-direction:column; line-height:1.15; min-width:0; overflow:hidden;}
+  .brand-text .name{background:linear-gradient(135deg,var(--purple),var(--pink) 65%, var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:19px; font-weight:900; direction:ltr; white-space:nowrap;}
+  .brand-text .tagline{font-size:10px; font-weight:600; letter-spacing:.14em; color:var(--muted); direction:ltr; white-space:nowrap;}
+  footer .brand img{height:38px; width:38px;}
   footer .brand-text .name{font-size:17px;}
+  .home-brand img{height:54px; width:54px;}
+  .home-brand .name{font-size:21px;}
+  @media (max-width:480px){
+    .brand img{height:38px; width:38px;}
+    .brand-text{display:none;}
+  }
   .nav-links{display:flex; align-items:center; gap:30px; font-size:15px; color:var(--muted);}
   .nav-links > a:hover{color:var(--text);}
   .nav-links > a.active{color:var(--text);}
@@ -89,6 +107,28 @@
   .submenu a:hover{background:rgba(155,93,229,.1); color:var(--text);}
 
   .nav-cta{background:linear-gradient(135deg,var(--purple),var(--pink)); padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; color:#fff; white-space:nowrap;}
+
+  .nav-actions{display:flex; align-items:center; gap:12px;}
+  .icon-btn{width:40px; height:40px; border-radius:10px; background:var(--bg-elev); border:1px solid var(--border); color:var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none; transition:border-color .2s ease, transform .2s ease;}
+  .icon-btn:hover{border-color:var(--purple); transform:translateY(-1px);}
+  .icon-btn svg{width:19px; height:19px;}
+  .theme-icon-moon{display:none;}
+  :root[data-theme="light"] .theme-icon-sun{display:none;}
+  :root[data-theme="light"] .theme-icon-moon{display:block;}
+
+  .search-panel{position:fixed; inset:0; z-index:200; background:rgba(8,5,15,.88); backdrop-filter:blur(10px); opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s; padding:110px 24px 24px;}
+  .search-panel.open{opacity:1; visibility:visible;}
+  .search-box{max-width:640px; margin:0 auto;}
+  .search-box input{width:100%; padding:16px 20px; border-radius:14px; background:var(--bg-elev); border:1px solid var(--border); color:var(--text); font-family:'Cairo',sans-serif; font-size:16px;}
+  .search-box input:focus{outline:none; border-color:var(--purple);}
+  .search-close{position:absolute; top:26px; left:26px; }
+  .search-results{margin-top:14px; display:flex; flex-direction:column; gap:8px; max-height:60vh; overflow-y:auto;}
+  .search-results a{padding:13px 16px; border-radius:12px; background:var(--bg-elev); border:1px solid var(--border); color:var(--text); font-size:14.5px; display:flex; justify-content:space-between; align-items:center;}
+  .search-results a:hover{border-color:var(--purple);}
+  .search-results a span.hint{color:var(--muted); font-size:12px;}
+  .search-empty{color:var(--muted); text-align:center; padding:20px; font-size:14px;}
+
+  .copy-feedback{font-size:11.5px; color:var(--cyan); margin-top:8px; text-align:center; height:14px;}
 
   .page-head{padding:64px 0 20px; text-align:center;}
   .page-head h1{font-size:36px; font-weight:900; margin-bottom:14px;}
@@ -127,6 +167,9 @@
   .btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 34px -6px rgba(241,91,181,.7);}
   .btn-ghost{border:1px solid var(--border); color:var(--text); background:rgba(255,255,255,.03);}
   .btn-ghost:hover{border-color:var(--purple); background:rgba(155,93,229,.08);}
+  .btn-secondary{border:1px solid var(--border); color:var(--text); background:var(--bg-elev-2);}
+  .btn-secondary:hover{border-color:var(--purple);}
+  .btn-block{width:100%; padding:12px 20px; font-size:14px;}
 
   .terminal{max-width:520px; margin:0 auto; background:var(--bg-elev); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; text-align:right; font-family:'Cairo',monospace; box-shadow:0 20px 50px -20px rgba(0,0,0,.6);}
   .terminal .dots{display:flex; gap:6px; margin-bottom:14px; justify-content:flex-start; flex-direction:row-reverse;}
@@ -291,7 +334,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <div class="brand"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></div>
+      <a href="index.html" class="brand home-brand"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></a>
       <div class="nav-links">
         <a href="index.html" class="active">الرئيسية</a>
         <div class="nav-item">
@@ -338,10 +381,29 @@
         <a href="problems.html">مشاكل وحلول</a>
         <a href="about.html">عن الموقع</a>
       </div>
-      <a href="submit.html" class="nav-cta">عندي مشكلة</a>
+      <div class="nav-actions">
+        <button type="button" class="icon-btn" id="searchToggle" aria-label="بحث">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </button>
+        <button type="button" class="icon-btn" id="themeToggle" aria-label="تبديل الوضع الفاتح والغامق">
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        </button>
+        <a href="submit.html" class="nav-cta">عندي مشكلة</a>
+      </div>
     </nav>
   </div>
 </header>
+
+<div class="search-panel" id="searchPanel">
+  <button type="button" class="icon-btn search-close" id="searchClose" aria-label="إغلاق البحث">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="ابحث عن كورس، مقال، أو موضوع...">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
 
 <main class="wrap">
 
@@ -494,13 +556,39 @@
     </div>
   </section>
 
+  <section class="block" id="support">
+    <div class="section-head">
+      <h2>ادعم الموقع</h2>
+      <p>لو المحتوى فادك حاجة، تقدر تدعم صاحب الموقع بأي مبلغ بسيط كـ شكر على مجهوده. مش شرط، بس أي حاجة بتفرق.</p>
+    </div>
+    <div class="grid grid-2" style="max-width:680px; margin:0 auto;">
+
+      <div class="card" style="text-align:center;">
+        <div class="icon-badge" style="margin:0 auto 18px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></div>
+        <h3>فودافون كاش</h3>
+        <p style="direction:ltr; font-family:monospace; font-size:19px; color:var(--text); margin:6px 0 16px;">01096385763</p>
+        <button type="button" class="btn btn-secondary btn-block copy-btn" data-copy="01096385763">نسخ الرقم</button>
+        <div class="copy-feedback" data-feedback-for="01096385763"></div>
+      </div>
+
+      <div class="card" style="text-align:center;">
+        <div class="icon-badge" style="margin:0 auto 18px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h3>InstaPay</h3>
+        <p style="direction:ltr; font-family:monospace; font-size:19px; color:var(--text); margin:6px 0 16px;">01016406481</p>
+        <button type="button" class="btn btn-secondary btn-block copy-btn" data-copy="01016406481">نسخ الرقم</button>
+        <div class="copy-feedback" data-feedback-for="01016406481"></div>
+      </div>
+
+    </div>
+  </section>
+
 </main>
 
 <footer>
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></div>
+        <a href="index.html" class="brand" style="margin-bottom:14px;"><img src="logo.png" alt="Database School"><span class="brand-text"><span class="name">Database School</span><span class="tagline">DATA CLOUD</span></span></a>
         <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery — على أي منصة تستخدمها.</p>
       </div>
       <div>
@@ -524,6 +612,120 @@
     <div class="footer-bottom">© 2026 Database Admin School — كل الحقوق محفوظة</div>
   </div>
 </footer>
+
+<script>
+  // ---- Theme toggle (dark/light) ----
+  (function(){
+    var root = document.documentElement;
+    var saved = localStorage.getItem('dbschool-theme');
+    if(saved === 'light'){ root.setAttribute('data-theme','light'); }
+    var btn = document.getElementById('themeToggle');
+    if(btn){
+      btn.addEventListener('click', function(){
+        var isLight = root.getAttribute('data-theme') === 'light';
+        if(isLight){
+          root.removeAttribute('data-theme');
+          localStorage.setItem('dbschool-theme','dark');
+        }else{
+          root.setAttribute('data-theme','light');
+          localStorage.setItem('dbschool-theme','light');
+        }
+      });
+    }
+  })();
+
+  // ---- Site search ----
+  (function(){
+    var searchIndex = [
+      {title:'الكورسات', url:'courses.html', keywords:'كورسات دورات تعلم SQL Server PostgreSQL MySQL Oracle MongoDB courses'},
+      {title:'SQL Language — المسار الكامل', url:'sql-path.html', keywords:'sql لغة استعلام أوامر دوال جداول علاقات مسار'},
+      {title:'Database Administration', url:'courses.html#database-administration', keywords:'ادارة قواعد بيانات dba sql server postgresql mysql oracle'},
+      {title:'Data Analysis', url:'courses.html#data-analysis', keywords:'تحليل بيانات data analysis mongodb'},
+      {title:'Data Warehousing', url:'courses.html#data-warehousing', keywords:'مستودعات بيانات data warehousing'},
+      {title:'Servers - Backup & Recovery / Performance / HA', url:'servers.html', keywords:'سيرفرات نسخ احتياطي اداء performance tuning high availability backup recovery'},
+      {title:'Networking', url:'networks.html', keywords:'شبكات networking firewall vpn'},
+      {title:'Cloud (AWS, Azure, GCP)', url:'cloud.html', keywords:'سحابة cloud aws azure google'},
+      {title:'Virtualization - VMware ESXi', url:'courses.html#virtualization', keywords:'فيرتشوال vmware esxi vcenter'},
+      {title:'Backup & Recovery - Veeam', url:'courses.html#backup', keywords:'نسخ احتياطي veeam disaster recovery'},
+      {title:'المقالات', url:'articles.html', keywords:'مقالات شروحات articles'},
+      {title:'مشاكل وحلول', url:'problems.html', keywords:'مشاكل حلول problems'},
+      {title:'Technical Support & Help Desk', url:'helpdesk.html', keywords:'دعم فني مشاكل عاجلة helpdesk support'},
+      {title:'إرسال مشكلة', url:'submit.html', keywords:'ارسال مشكلة submit'},
+      {title:'عن الموقع', url:'about.html', keywords:'عن الموقع من نحن about'},
+      {title:'ادعم الموقع', url:'index.html#support', keywords:'دعم تبرع فودافون كاش انستاباي vodafone cash instapay donate'}
+    ];
+
+    var panel = document.getElementById('searchPanel');
+    var toggle = document.getElementById('searchToggle');
+    var closeBtn = document.getElementById('searchClose');
+    var input = document.getElementById('searchInput');
+    var results = document.getElementById('searchResults');
+
+    function openSearch(){
+      panel.classList.add('open');
+      setTimeout(function(){ input.focus(); }, 50);
+      renderResults('');
+    }
+    function closeSearch(){
+      panel.classList.remove('open');
+      input.value = '';
+    }
+    function renderResults(q){
+      results.innerHTML = '';
+      var query = q.trim().toLowerCase();
+      var matches = !query ? searchIndex : searchIndex.filter(function(item){
+        return (item.title + ' ' + item.keywords).toLowerCase().indexOf(query) !== -1;
+      });
+      if(matches.length === 0){
+        results.innerHTML = '<div class="search-empty">مفيش نتائج مطابقة، جرب كلمة تانية</div>';
+        return;
+      }
+      matches.slice(0,10).forEach(function(item){
+        var a = document.createElement('a');
+        a.href = item.url;
+        a.innerHTML = '<span>' + item.title + '</span><span class="hint">افتح ←</span>';
+        results.appendChild(a);
+      });
+    }
+
+    if(toggle) toggle.addEventListener('click', openSearch);
+    if(closeBtn) closeBtn.addEventListener('click', closeSearch);
+    if(panel) panel.addEventListener('click', function(e){ if(e.target === panel) closeSearch(); });
+    if(input) input.addEventListener('input', function(){ renderResults(input.value); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeSearch();
+      if((e.key === 'k' || e.key === 'K') && (e.ctrlKey || e.metaKey)){ e.preventDefault(); openSearch(); }
+    });
+  })();
+
+  // ---- Copy-to-clipboard for donation numbers ----
+  (function(){
+    var buttons = document.querySelectorAll('.copy-btn');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var value = btn.getAttribute('data-copy');
+        var feedback = document.querySelector('.copy-feedback[data-feedback-for="' + value + '"]');
+        function showDone(){
+          if(feedback){
+            feedback.textContent = 'تم نسخ الرقم ✓';
+            setTimeout(function(){ feedback.textContent=''; }, 2000);
+          }
+        }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(value).then(showDone);
+        }else{
+          var tmp = document.createElement('input');
+          document.body.appendChild(tmp);
+          tmp.value = value;
+          tmp.select();
+          document.execCommand('copy');
+          document.body.removeChild(tmp);
+          showDone();
+        }
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
