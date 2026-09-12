@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدوال التجميعية و GROUP BY و HAVING | Database Admin School</title>
+<meta name="description" content="COUNT, SUM, AVG, MIN, MAX مع GROUP BY و HAVING لتلخيص وتحليل البيانات في SQL.">
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lesson-extra.css">
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand"><span class="mark">&lt;db&gt;</span> Database Admin School</a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="courses.html">الكورسات</a></li>
+        <li><a href="sql_path.html" class="active">مسار SQL</a></li>
+        <li><a href="articles.html">المقالات</a></li>
+        <li><a href="problems.html">مشاكل وحلول</a></li>
+        <li><a href="about.html">عن الموقع</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <button class="menu-toggle" id="menuToggle" aria-label="القائمة">☰</button>
+      <a href="submit.html" class="btn btn-primary btn-sm btn-text">عندي مشكلة</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="breadcrumb">
+  <a href="index.html">الرئيسية</a> ›
+  <a href="sql_path.html">مسار SQL</a> ›
+  الدوال التجميعية
+</div>
+
+<section class="page-head">
+  <div class="icon-badge badge-cyan" style="margin:0 auto 20px;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div>
+  <div class="lesson-meta">
+    <span class="pill"><span class="dot"></span>مبتدئ - متوسط</span>
+    <span class="pill">⏱ 20 دقيقة</span>
+    <span class="pill">📚 الدرس 3 من 7</span>
+  </div>
+  <h1 style="margin-top:18px;">الدوال التجميعية <span class="grad">GROUP BY · HAVING</span></h1>
+  <p>حوّل مئات الصفوف لأرقام وملخصات مفيدة بضغطة زر.</p>
+</section>
+
+<div class="lesson-intro">
+  <h3>🎯 هتتعلم إيه في الدرس ده؟</h3>
+  <ul>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>استخدام COUNT, SUM, AVG, MIN, MAX.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>تجميع البيانات حسب فئة معينة باستخدام GROUP BY.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>الفرق العملي بين WHERE و HAVING.</span></li>
+  </ul>
+</div>
+
+<div class="lesson-body" style="max-width:780px; margin:0 auto;">
+
+<p>جدول التدريب:</p>
+<pre>CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY,
+    ProductID INT,
+    Quantity INT,
+    Price DECIMAL(10,2),
+    SaleDate DATE
+);
+
+INSERT INTO Sales (SaleID, ProductID, Quantity, Price, SaleDate) VALUES
+(1, 101, 5, 10.00, '2024-07-01'),
+(2, 102, 3, 20.00, '2024-07-01'),
+(3, 101, 7, 10.00, '2024-07-02'),
+(4, 103, 2, 30.00, '2024-07-02'),
+(5, 104, 1, 40.00, '2024-07-03'),
+(6, 102, 4, 20.00, '2024-07-03'),
+(7, 101, 8, 10.00, '2024-07-04'),
+(8, 103, 6, 30.00, '2024-07-04');</pre>
+
+<h2>🧮 الدوال التجميعية الخمس الأساسية</h2>
+<div class="table-wrap"><table><thead><tr><th>الدالة</th><th>الوظيفة</th></tr></thead><tbody><tr><td><code class='inline'>COUNT(*)</code></td><td>عدد السجلات</td></tr><tr><td><code class='inline'>SUM(col)</code></td><td>مجموع القيم</td></tr><tr><td><code class='inline'>AVG(col)</code></td><td>متوسط القيم</td></tr><tr><td><code class='inline'>MIN(col)</code></td><td>أصغر قيمة</td></tr><tr><td><code class='inline'>MAX(col)</code></td><td>أكبر قيمة</td></tr></tbody></table></div>
+<pre>SELECT COUNT(*) AS TotalSales FROM Sales;
+SELECT SUM(Quantity) AS TotalQty FROM Sales;
+SELECT AVG(Price) AS AvgPrice FROM Sales;</pre>
+
+<h2>🗂️ GROUP BY — التجميع حسب فئة</h2>
+<p>تخيل أنك مسؤول مكتبة وعايز تصنّف الكتب حسب النوع ثم تحسب عدد كل نوع — هذا بالضبط ما تفعله GROUP BY.</p>
+<pre>-- مجموع الكمية المباعة لكل منتج
+SELECT ProductID, SUM(Quantity) AS TotalQuantitySold
+FROM Sales
+GROUP BY ProductID;
+
+-- عدد مرات بيع كل منتج
+SELECT ProductID, COUNT(*) AS NumberOfSales
+FROM Sales
+GROUP BY ProductID;</pre>
+<p><b>القاعدة الذهبية:</b> أي عمود تكتبه في SELECT ولم تستخدمه داخل دالة تجميعية، لازم يكون موجودًا في GROUP BY.</p>
+
+<h2>🧹 HAVING — فلترة المجموعات</h2>
+<p><code class="inline">WHERE</code> بتفلتر الصفوف <b>قبل</b> التجميع، أما <code class="inline">HAVING</code> بتفلتر المجموعات <b>بعد</b> التجميع.</p>
+<pre>SELECT ProductID, COUNT(*) AS NumberOfSales
+FROM Sales
+GROUP BY ProductID
+HAVING COUNT(*) > 2;</pre>
+
+<div class="callout callout--warning">
+  <span class="co-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 20h20L12 2z"/><path d="M12 9v5M12 17h.01"/></svg></span>
+  <div class="co-body"><b>ترتيب الجملة الكاملة (احفظه)</b><code class='inline'>SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ...</code> — لو حاولت تستخدم COUNT() داخل WHERE هتاخد خطأ، لازم تستخدمها في HAVING لأن WHERE بتتنفذ قبل التجميع.</div>
+</div>
+
+<div class="exercise-box">
+  <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>تمرين تطبيقي</h3>
+  <ol><li>احسب إجمالي عدد السجلات في جدول Sales.</li><li>احسب أعلى وأقل سعر مسجّل.</li><li>اعرض كل منتج مع إجمالي ما بيع منه، لكن فقط المنتجات التي بيعت بكمية إجمالية أكبر من 10.</li></ol>
+</div>
+
+</div>
+
+<div class="lesson-nav">
+<a class="prev" href="lesson_02.html">
+    <span class="dir">➡️ السابق</span>
+    <span class="ttl">SELECT و WHERE و ORDER BY</span>
+  </a>
+<a class="next" href="lesson_04.html">
+    <span class="dir">التالي ⬅️</span>
+    <span class="ttl">أنواع البيانات والقيود والمفاتيح</span>
+  </a>
+</div>
+
+<div class="help-banner" style="margin:70px 0;">
+  <div>
+    <h2>تاسكاية جامعية أو مشروع تخرج محتاج فيه مساعدة؟</h2>
+    <p>ابعتلي تفاصيل المشكلة أو الدرس اللي مش فاهمه وهرد عليك بسرعة.</p>
+  </div>
+  <div class="help-actions">
+    <a class="contact-row" href="https://wa.me/201016406481" target="_blank">
+      <span class="ic">📱</span>
+      <span class="info"><b>واتساب</b><span>01016406481</span></span>
+    </a>
+    <a class="contact-row" href="mailto:barakatramadan394@gmail.com">
+      <span class="ic">✉️</span>
+      <span class="info"><b>إيميل</b><span>barakatramadan394@gmail.com</span></span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:14px;"><span class="mark">&lt;db&gt;</span> Database Admin School</div>
+        <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="sql_path.html">مسار SQL كامل</a></li>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="helpdesk.html">Help Desk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل</h4>
+        <div class="footer-contact">📱 <b>01016406481</b></div>
+        <div class="footer-contact">✉️ <b>barakatramadan394@gmail.com</b></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Database Admin School</span>
+      <span>الدرس 3 من مسار SQL — الدوال التجميعية <span class="grad">GROUP BY · HAVING</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const t = document.getElementById('menuToggle');
+  const n = document.getElementById('mainNav');
+  if(t){ t.addEventListener('click', () => n.classList.toggle('open')); }
+</script>
+</body>
+</html>

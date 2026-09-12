@@ -1,0 +1,130 @@
+/* ===== lesson-extra.css =====
+   إضافات خاصة بصفحات الدروس (lesson_XX.html) فقط.
+   ارفع هذا الملف بجانب style.css في نفس مجلد المشروع،
+   وأضف سطر <link rel="stylesheet" href="lesson-extra.css"> بعد style.css في كل صفحة درس.
+   الملف بيستخدم نفس متغيرات الألوان (--violet, --pink, --cyan...) المعرّفة في style.css. */
+
+/* -------- شارات مستوى/فئة أعلى الدرس -------- */
+.lesson-meta{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px;}
+
+/* -------- صندوق "هتتعلم إيه في الدرس ده" -------- */
+.lesson-intro{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:26px 30px;
+  margin:36px 0 10px;
+  position:relative;
+  overflow:hidden;
+}
+.lesson-intro::before{
+  content:"";
+  position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px;
+  background:var(--grad-1);
+}
+.lesson-intro h3{font-size:16.5px; font-weight:800; margin:0 0 12px;}
+.lesson-intro ul{margin:0; padding-inline-start:0;}
+.lesson-intro li{
+  display:flex; align-items:flex-start; gap:10px;
+  color:var(--muted); font-size:14.5px; margin-bottom:10px;
+}
+.lesson-intro li:last-child{margin-bottom:0;}
+.lesson-intro li svg{width:18px; height:18px; flex:none; color:var(--cyan); margin-top:2px;}
+
+/* -------- صناديق ملاحظات ملوّنة (Callouts) -------- */
+.callout{
+  border-radius:14px;
+  padding:18px 22px;
+  margin:24px 0;
+  font-size:14.5px;
+  line-height:1.8;
+  border:1px solid var(--border);
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.callout .co-icon{
+  width:34px; height:34px; border-radius:10px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+}
+.callout .co-icon svg{width:18px; height:18px; color:#fff;}
+.callout .co-body b{display:block; margin-bottom:4px; font-size:14px;}
+.callout .co-body{color:var(--muted);}
+
+.callout--tip{background:rgba(139,92,246,0.10); border-color:rgba(139,92,246,0.28);}
+.callout--tip .co-icon{background:var(--grad-1);}
+
+.callout--info{background:rgba(34,211,238,0.08); border-color:rgba(34,211,238,0.25);}
+.callout--info .co-icon{background:var(--grad-2);}
+
+.callout--warning{background:rgba(251,191,36,0.08); border-color:rgba(251,191,36,0.28);}
+.callout--warning .co-icon{background:linear-gradient(135deg,var(--amber),var(--red));}
+
+/* -------- كود داخل السطر -------- */
+code.inline{
+  background:rgba(255,255,255,0.08);
+  color:var(--amber);
+  padding:2px 7px;
+  border-radius:6px;
+  font-family:monospace;
+  font-size:13.5px;
+  direction:ltr;
+  display:inline-block;
+}
+
+/* -------- جداول داخل الدرس -------- */
+.lesson-body .table-wrap{overflow-x:auto; margin:22px 0; border-radius:14px; border:1px solid var(--border);}
+.lesson-body table{width:100%; border-collapse:collapse; font-size:14px; min-width:420px;}
+.lesson-body table th{
+  background:var(--panel-2); color:var(--text); font-weight:700;
+  padding:12px 16px; text-align:right; white-space:nowrap;
+}
+.lesson-body table td{
+  padding:11px 16px; color:var(--muted); border-top:1px solid var(--border);
+}
+.lesson-body table tr:hover td{background:rgba(255,255,255,0.02); color:var(--text);}
+
+/* -------- صندوق التمرين التطبيقي -------- */
+.exercise-box{
+  background:linear-gradient(135deg, rgba(52,211,153,0.10), rgba(34,211,238,0.06));
+  border:1px solid rgba(52,211,153,0.28);
+  border-radius:var(--radius);
+  padding:28px 30px;
+  margin:44px 0;
+}
+.exercise-box h3{display:flex; align-items:center; gap:10px; font-size:17px; margin:0 0 14px;}
+.exercise-box h3 .ic{
+  width:32px; height:32px; border-radius:9px; flex:none;
+  background:linear-gradient(135deg,var(--green),#0ea5e9);
+  display:flex; align-items:center; justify-content:center;
+}
+.exercise-box h3 .ic svg{width:16px; height:16px; color:#fff;}
+.exercise-box ol{margin:0; padding-inline-start:22px; color:var(--muted); font-size:14.5px;}
+.exercise-box li{margin-bottom:10px;}
+.exercise-box li:last-child{margin-bottom:0;}
+
+/* -------- التنقل بين الدروس (السابق/التالي) -------- */
+.lesson-nav{
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  margin:50px 0 10px;
+}
+.lesson-nav a{
+  flex:1; min-width:200px;
+  background:var(--panel); border:1px solid var(--border); border-radius:14px;
+  padding:16px 20px; transition:.2s;
+}
+.lesson-nav a:hover{border-color:var(--violet); transform:translateY(-2px);}
+.lesson-nav .dir{font-size:12px; color:var(--muted); display:block; margin-bottom:6px;}
+.lesson-nav .ttl{font-size:14.5px; font-weight:700;}
+.lesson-nav a.next{text-align:left;}
+
+/* -------- شبكة كروت الدروس (لصفحة المسار/الفهرس) -------- */
+.lesson-card .lesson-num{
+  position:absolute; top:20px; left:20px;
+  font-family:monospace; font-size:12px; color:var(--muted);
+  background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:8px;
+}
+
+@media (max-width:620px){
+  .lesson-nav a.next{text-align:right;}
+}

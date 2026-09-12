@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقدمة قواعد البيانات و SQL | Database Admin School</title>
+<meta name="description" content="تعرف على مفهوم قواعد البيانات، الجداول، الأعمدة والصفوف، وابدأ أول جدول SQL بنفسك.">
+<link rel="icon" href="favicon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lesson-extra.css">
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand"><span class="mark">&lt;db&gt;</span> Database Admin School</a>
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="courses.html">الكورسات</a></li>
+        <li><a href="sql_path.html" class="active">مسار SQL</a></li>
+        <li><a href="articles.html">المقالات</a></li>
+        <li><a href="problems.html">مشاكل وحلول</a></li>
+        <li><a href="about.html">عن الموقع</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <button class="menu-toggle" id="menuToggle" aria-label="القائمة">☰</button>
+      <a href="submit.html" class="btn btn-primary btn-sm btn-text">عندي مشكلة</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="breadcrumb">
+  <a href="index.html">الرئيسية</a> ›
+  <a href="sql_path.html">مسار SQL</a> ›
+  مقدمة SQL
+</div>
+
+<section class="page-head">
+  <div class="icon-badge badge-violet" style="margin:0 auto 20px;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg></div>
+  <div class="lesson-meta">
+    <span class="pill"><span class="dot"></span>مبتدئ</span>
+    <span class="pill">⏱ 15 دقيقة</span>
+    <span class="pill">📚 الدرس 1 من 7</span>
+  </div>
+  <h1 style="margin-top:18px;">مقدمة إلى <span class="grad">قواعد البيانات و SQL</span></h1>
+  <p>الأساس اللي لازم تفهمه قبل ما تكتب أي سطر SQL في حياتك.</p>
+</section>
+
+<div class="lesson-intro">
+  <h3>🎯 هتتعلم إيه في الدرس ده؟</h3>
+  <ul>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>الفرق بين قاعدة البيانات والجدول والعمود والصف.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>ليه محتاجين لغة استعلام أصلاً زي SQL.</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>تكتب أول أمر CREATE TABLE و INSERT و SELECT بنفسك.</span></li>
+  </ul>
+</div>
+
+<div class="lesson-body" style="max-width:780px; margin:0 auto;">
+
+<h2>🤔 ما هي قاعدة البيانات؟</h2>
+<p>قاعدة البيانات هي مجموعة منظمة من المعلومات يمكن الوصول إليها وإدارتها وتحديثها بسهولة. تخيّلها كحافظة ملفات إلكترونية كبيرة:</p>
+
+<div class="table-wrap"><table><thead><tr><th>المفهوم</th><th>تشبيه بسيط</th></tr></thead><tbody><tr><td>قاعدة البيانات <code class='inline'>Database</code></td><td>الحافظة نفسها</td></tr><tr><td>الجدول <code class='inline'>Table</code></td><td>مجلد داخل الحافظة، مثلاً «الأصدقاء»</td></tr><tr><td>العمود <code class='inline'>Column</code></td><td>نوع معيّن من المعلومات (الاسم، الهاتف)</td></tr><tr><td>الصف <code class='inline'>Row</code></td><td>ورقة داخل المجلد، بيانات شخص واحد</td></tr></tbody></table></div>
+
+<h2>🧩 لماذا نحتاج لغة استعلام؟</h2>
+<p>قواعد البيانات الحديثة معقدة وتحتوي عشرات الجداول المترابطة، فكان لازم نلاقي واجهة موحدة نتعامل بيها مع هذا الكم من البيانات بكفاءة — وهنا يجي دور <b>SQL</b>.</p>
+
+<h2>💻 ما هي SQL؟</h2>
+<p><b>SQL</b> اختصار لـ <b>Structured Query Language</b> (لغة الاستعلام الهيكلية)، وهي اللغة القياسية للتعامل مع قواعد البيانات العلائقية. بتمكّنك من استعلام البيانات، إدخالها، تحديثها، حذفها، وإدارة هيكل قاعدة البيانات نفسها.</p>
+
+<div class="callout callout--info">
+  <span class="co-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+  <div class="co-body"><b>معلومة إضافية</b>كل أنظمة إدارة قواعد البيانات الكبرى — MySQL، PostgreSQL، SQL Server، Oracle، وحتى SQLite في تطبيقات الموبايل — تستخدم SQL كلغة أساسية، مع اختلافات بسيطة تُسمى «لهجات» (Dialects). لو أتقنت الأساسيات هتقدر تتنقل بين أي قاعدة بيانات بسهولة.</div>
+</div>
+
+<h2>🛠️ أول جدول لك</h2>
+<pre>CREATE TABLE Friends (
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    PhoneNumber VARCHAR(15),
+    Email VARCHAR(100)
+);</pre>
+<p><code class="inline">CREATE TABLE Friends</code> ننشئ جدول جديد، وكل سطر بعدها هو تعريف عمود: اسم العمود ثم نوع البيانات اللي هيخزّنه. <code class="inline">VARCHAR(50)</code> يعني نص متغير الطول بحد أقصى 50 حرف.</p>
+
+<h2>➕ إدخال البيانات</h2>
+<pre>INSERT INTO Friends (FirstName, LastName, PhoneNumber, Email)
+VALUES
+('Ali', 'Al-Ahmad', '123456789', 'ali@example.com'),
+('Sara', 'Ahmad', '987654321', 'sara@example.com'),
+('Mohamed', 'Al-Tayeb', '456123789', 'mohamed@example.com');</pre>
+
+<h2>🔍 استرجاع البيانات</h2>
+<pre>SELECT * FROM Friends;</pre>
+
+<div class="callout callout--warning">
+  <span class="co-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 20h20L12 2z"/><path d="M12 9v5M12 17h.01"/></svg></span>
+  <div class="co-body"><b>أسئلة شائعة</b>هل لازم أكتب الأوامر بحروف كبيرة؟ لا، SQL مش حساسة لحالة الأحرف، لكن الاصطلاح الشائع كتابة الكلمات المفتاحية بحروف كبيرة لتمييزها. وبالنسبة لعلامات الاقتباس: استخدم دائمًا العلامة المفردة ' للقيم النصية لتفادي أي التباس.</div>
+</div>
+
+<div class="exercise-box">
+  <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>جرّب بنفسك الآن</h3>
+  <ol><li>افتح <a href='https://www.db-fiddle.com' target='_blank'>db-fiddle.com</a> وأنشئ جدول Friends بنفس الأعمدة أعلاه.</li><li>أدخل بياناتك الشخصية وبيانات صديقين لك.</li><li>استخدم <code class='inline'>SELECT * FROM Friends;</code> واعرض النتيجة.</li></ol>
+</div>
+
+</div>
+
+<div class="lesson-nav">
+<span></span>
+<a class="next" href="lesson_02.html">
+    <span class="dir">التالي ⬅️</span>
+    <span class="ttl">الاستعلام والتصفية والترتيب (SELECT / WHERE)</span>
+  </a>
+</div>
+
+<div class="help-banner" style="margin:70px 0;">
+  <div>
+    <h2>تاسكاية جامعية أو مشروع تخرج محتاج فيه مساعدة؟</h2>
+    <p>ابعتلي تفاصيل المشكلة أو الدرس اللي مش فاهمه وهرد عليك بسرعة.</p>
+  </div>
+  <div class="help-actions">
+    <a class="contact-row" href="https://wa.me/201016406481" target="_blank">
+      <span class="ic">📱</span>
+      <span class="info"><b>واتساب</b><span>01016406481</span></span>
+    </a>
+    <a class="contact-row" href="mailto:barakatramadan394@gmail.com">
+      <span class="ic">✉️</span>
+      <span class="info"><b>إيميل</b><span>barakatramadan394@gmail.com</span></span>
+    </a>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand" style="margin-bottom:14px;"><span class="mark">&lt;db&gt;</span> Database Admin School</div>
+        <p>مصدر شامل لكل حاجة في عالم البيانات والبنية التحتية: Database Administration، Data Analysis، Data Warehousing، Virtualization، وBackup & Recovery.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="sql_path.html">مسار SQL كامل</a></li>
+          <li><a href="courses.html">الكورسات</a></li>
+          <li><a href="articles.html">المقالات</a></li>
+          <li><a href="problems.html">مشاكل وحلول</a></li>
+          <li><a href="helpdesk.html">Help Desk</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل</h4>
+        <div class="footer-contact">📱 <b>01016406481</b></div>
+        <div class="footer-contact">✉️ <b>barakatramadan394@gmail.com</b></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Database Admin School</span>
+      <span>الدرس 1 من مسار SQL — مقدمة إلى <span class="grad">قواعد البيانات و SQL</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const t = document.getElementById('menuToggle');
+  const n = document.getElementById('mainNav');
+  if(t){ t.addEventListener('click', () => n.classList.toggle('open')); }
+</script>
+</body>
+</html>
